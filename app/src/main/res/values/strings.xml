@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">GranaRoutes</string>
+    <string name="title_activity_actividad_principal">Inicio</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
