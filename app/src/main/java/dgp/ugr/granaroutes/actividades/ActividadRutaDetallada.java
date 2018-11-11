@@ -1,9 +1,7 @@
-package dgp.ugr.granaroutes.activities;
+package dgp.ugr.granaroutes.actividades;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import dgp.ugr.granaroutes.R;
 

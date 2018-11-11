@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_rutas"
         android:contentDescription="@string/rutas_descripcion"
         android:icon="@drawable/ic_rutas_logo"
         android:title="@string/rutas_titulo" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_rutas_favoritas"
         android:icon="@drawable/ic_favoritos_logo"
         android:contentDescription="@string/rutas_descripcion_favoritos"
         android:title="@string/rutas_descripcion_favoritos" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_mapa"
         android:icon="@drawable/ic_map_logo"
         android:contentDescription="@string/mapa_descricion"
         android:title="@string/mapa_descricion" />

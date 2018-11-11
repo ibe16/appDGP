@@ -1,6 +1,5 @@
 package dgp.ugr.granaroutes.utils;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -11,7 +10,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.activities.ActividadPrincipal;
+import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 

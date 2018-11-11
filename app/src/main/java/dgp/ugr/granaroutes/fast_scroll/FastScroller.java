@@ -42,6 +42,7 @@ public class FastScroller extends LinearLayout {
         setOrientation(VERTICAL);
         setClipChildren(false);
         LayoutInflater inflater = LayoutInflater.from(context);
+        //TODO INTRODUCIR LOS ICONOS DE FASTSCROLLER Y DOCUMENTAR
 //        inflater.inflate(R.layout.fastscroller, this);
 //        bubble = findViewById(R.id.fastscroller_bubble);
     }
