@@ -3,17 +3,20 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:contentDescription="@string/rutas_descripcion"
+        android:icon="@drawable/ic_rutas_logo"
+        android:title="@string/rutas_titulo" />
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:icon="@drawable/ic_favoritos_logo"
+        android:contentDescription="@string/rutas_descripcion_favoritos"
+        android:title="@string/rutas_descripcion_favoritos" />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:icon="@drawable/ic_map_logo"
+        android:contentDescription="@string/mapa_descricion"
+        android:title="@string/mapa_descricion" />
 
 </menu>

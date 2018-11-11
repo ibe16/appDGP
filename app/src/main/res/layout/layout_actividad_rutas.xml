@@ -6,7 +6,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:focusable="true"
+        android:contentDescription="@string/pruebas">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_articles"

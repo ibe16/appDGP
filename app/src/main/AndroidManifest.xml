@@ -9,15 +9,20 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ActividadPrincipal"
+            android:name=".activities.ActividadPrincipal"
             android:label="@string/title_activity_actividad_principal">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,8 +43,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ActividadMapa"
-            android:label="@string/title_activity_actividad_mapa"></activity>
+            android:name=".activities.ActividadMapa"
+            android:label="@string/title_activity_actividad_mapa" />
+        <activity
+            android:name=".activities.ActividadRutaDetallada"
+            android:label="@string/title_activity_actividad_mapa" />
     </application>
 
 </manifest>

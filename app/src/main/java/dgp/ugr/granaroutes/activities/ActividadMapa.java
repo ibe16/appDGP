@@ -1,4 +1,4 @@
-package dgp.ugr.granaroutes;
+package dgp.ugr.granaroutes.activities;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,9 +10,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import dgp.ugr.granaroutes.R;
+
 public class ActividadMapa extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private GoogleMap mapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,11 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        mapa = googleMap;
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mapa.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mapa.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
