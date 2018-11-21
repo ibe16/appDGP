@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "576250634726",
+    "firebase_url": "https://granaroutesaplicacion.firebaseio.com",
+    "project_id": "granaroutesaplicacion",
+    "storage_bucket": "granaroutesaplicacion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576250634726:android:056e7f21a525ab93",
+        "android_client_info": {
+          "package_name": "dgp.ugr.granaroutes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576250634726-eh1drst7vkqgjcvrmg6hlm28nup0g61u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dgp.ugr.granaroutes",
+            "certificate_hash": "0cac789085c202fcfeef74bacde6d6f560c4eeab"
+          }
+        },
+        {
+          "client_id": "576250634726-nod7kqjmrujk27c09d4bjorglgn214ub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC1ZTdl4Evu12Tltj2_LVvPLwanxWk2PQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576250634726-nod7kqjmrujk27c09d4bjorglgn214ub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -80,8 +80,9 @@ public class ActividadPrincipal extends AppCompatActivity
 
 
     /**
-     * Metodo para ir cambiando de fragmento, en funcion de qué botón se pinche de la barra de
-     * navegación inferior
+     * Manejando para ir cambiando de fragmento, en funcion de qué botón se pinche de la barra de
+     * navegación inferior.
+     *
      *
      * @param menuItem Elemento que se ha pinchado
      * @return booleano valor de la función cargarFragmento dependiendo de si es valido fragmento
