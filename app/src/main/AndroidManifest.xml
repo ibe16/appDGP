@@ -24,11 +24,6 @@
         <activity
             android:name=".actividades.ActividadPrincipal"
             android:label="@string/app_name">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -46,6 +41,18 @@
             android:name=".actividades.ActividadRutaDetallada"
             android:theme="@style/AppTheme"
             android:label="@string/titulo_detallado" />
+
+        <activity
+            android:name=".actividades.ActividadLogIn"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        <intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+
+            <action android:name="android.intent.action.MAIN" />
+
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>
