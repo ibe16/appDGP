@@ -14,7 +14,7 @@
 
     <!-- Login progress -->
     <ProgressBar
-        android:id="@+id/login_progress"
+        android:id="@+id/registro_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/formulario_login"
+        android:id="@+id/formulario_registro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/actividad_log_in_logo">
 
         <LinearLayout
-            android:id="@+id/email_formulario_login"
+            android:id="@+id/email_formulario_registro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/formulario_registro_descripcion"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/email_login"
+                    android:id="@+id/email_registro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/contraseña_login"
+                    android:id="@+id/contraseña_registro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -74,27 +74,19 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/boton_iniciar_sesion_email"
+                android:id="@+id/boton_registro_email"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
-            <Button
-                android:id="@+id/boton_iniciar_sesion_gmail"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in_google"
-                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
 
     <ImageView
-        android:id="@+id/actividad_log_in_logo"
+        android:id="@+id/actividad_registro_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
