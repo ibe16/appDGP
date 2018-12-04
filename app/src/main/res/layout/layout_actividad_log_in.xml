@@ -10,28 +10,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".actividades.ActividadRegistro">
+    tools:context=".actividades.ActividadLogIn">
 
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/formulario_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actividad_log_in_logo">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:id="@+id/email_formulario_login"
@@ -39,6 +34,19 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/formulario_registro_descripcion"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/actividad_log_in_logo"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/descripcion_logo_actividad_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_logo" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -79,30 +87,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:contentDescription="@string/action_sign_in"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/boton_registro_email"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/action_register_email"
+                android:text="@string/action_register_email"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/boton_iniciar_sesion_gmail"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:contentDescription="@string/action_sign_in_google"
                 android:text="@string/action_sign_in_google"
                 android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/actividad_log_in_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo" />
+
 
 </android.support.constraint.ConstraintLayout>

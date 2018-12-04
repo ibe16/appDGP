@@ -14,14 +14,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.auth.api.Auth;
 
@@ -31,6 +29,7 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
     EditText loginEmail,loginPassword;
     Button loginButtonEmail;
     Button loginButtonGoogle;
+    Button registroButtonEmail;
     private static final int RC_SIGN_IN = 9001;
     FirebaseAuth firebaseAuth;
     GoogleApiClient mGoogleApiClient;
@@ -43,6 +42,7 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
         loginEmail =  findViewById(R.id.email_login);
         loginPassword = findViewById(R.id.contraseña_login);
         loginButtonEmail = findViewById(R.id.boton_iniciar_sesion_email);
+        registroButtonEmail = findViewById(R.id.boton_registro_email);
         loginButtonGoogle = findViewById(R.id.boton_iniciar_sesion_gmail);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -64,6 +64,14 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
             }
         });
 
+        registroButtonEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrarCorreo();
+            }
+        });
+
+
         loginButtonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,30 +80,46 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
         });
 
         if(firebaseAuth.getCurrentUser()!=null){
+            Toast.makeText(getApplicationContext(),"Autenticado con "+ firebaseAuth.getCurrentUser().getDisplayName(),Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getApplicationContext(),ActividadPrincipal.class));
         }
 
     }
 
-    private void signInCorreo(){
-        firebaseAuth.createUserWithEmailAndPassword("guillergood@gmail.com", "guillergood")
+    private void registrarCorreo(){
+        firebaseAuth.createUserWithEmailAndPassword(loginEmail.getText().toString(),loginPassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(getApplicationContext(),"Autenticado",Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            //TODO updateUI(user);
+                            Toast.makeText(getApplicationContext(),"Registrado con "+ loginEmail.toString(),Toast.LENGTH_SHORT).show();
+                            irActividadPrincipal();
+
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getApplicationContext(),"Error autenticando",Toast.LENGTH_SHORT).show();
-                            //TODO updateUI(null);
+                            Toast.makeText(getApplicationContext(),"Error de registro",Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 });
+
     }
+
+    private void signInCorreo(){
+        firebaseAuth.signInWithEmailAndPassword(loginEmail.getText().toString(),loginPassword.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),"Iniciado sesión con "+ loginEmail.toString(),Toast.LENGTH_SHORT).show();
+                    irActividadPrincipal();
+
+                } else {
+                    Toast.makeText(getApplicationContext(),"Error de inicio de sesión",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     private void signInGoogle() {
         Intent signIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signIntent,RC_SIGN_IN);
@@ -110,23 +134,31 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
                 GoogleSignInAccount account = result.getSignInAccount();
                 authWithGoogle(account);
             }
+            else{
+                Toast.makeText(getApplicationContext(),"Error de autentificación",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    private void authWithGoogle(GoogleSignInAccount account) {
+    private void authWithGoogle(final GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    startActivity(new Intent(getApplicationContext(),ActividadPrincipal.class));
-                    finish();
+                    Toast.makeText(getApplicationContext(),"Autenticado con "+ account.getDisplayName(),Toast.LENGTH_SHORT).show();
+                    irActividadPrincipal();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"Auth Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Error de autentificación",Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void irActividadPrincipal(){
+        startActivity(new Intent(getApplicationContext(),ActividadPrincipal.class));
+        finish();
     }
 
     @Override

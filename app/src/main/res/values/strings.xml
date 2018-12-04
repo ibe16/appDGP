@@ -36,4 +36,6 @@
     <string name="titulo_detallado">Ruta Detallada</string>
     <string name="formulario_registro_descripcion">Formulario de registro o inicio de sesión</string>
     <string name="action_sign_in_google">Iniciar sesión Google</string>
+    <string name="action_register_email">Registrarse con correo</string>
+    <string name="descripcion_logo_actividad_login">Logo GranáRoutes</string>
 </resources>
