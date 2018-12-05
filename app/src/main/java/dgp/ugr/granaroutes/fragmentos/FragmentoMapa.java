@@ -1,5 +1,8 @@
 package dgp.ugr.granaroutes.fragmentos;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,7 +31,11 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
+        cargaMapa();
         return inflater.inflate(R.layout.layout_actividad_mapa, null);
+
+
     }
 
     /**
@@ -42,11 +49,23 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mapa = googleMap;
+/*        mapa = googleMap;
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mapa.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mapa.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mapa.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
+
+
+    }
+
+    private void cargaMapa(){
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.setComponent(ComponentName.unflattenFromString("com.google.android.apps.maps/com.google.android.maps.MapsActivity"));
+        intent.addCategory("android.intent.category.LAUNCHER");
+        // replace string with your Google My Map URL
+        Uri uri2 = Uri.parse("https://www.google.com/maps/d/u/1/edit?mid=1wDF2RY3sjyRSVQcdZCG916h8m9riQyga&ll=37.160344530940435%2C-3.685380214819361&z=15");
+        intent.setData(uri2);
+        startActivity(intent);
     }
 }

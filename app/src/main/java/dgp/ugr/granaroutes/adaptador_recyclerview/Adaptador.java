@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 
 
 //TODO rellenar el adaptador para el RecyclerView del fragmento, los datos de la base de datos externa
@@ -15,6 +16,13 @@ import android.view.ViewGroup;
  */
 public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
     private Context context;
+    private ArrayList rutas;
+
+
+    public Adaptador(Context context, ArrayList rutasRemotas) {
+        this.context = context;
+        rutas = rutasRemotas;
+    }
 
     @NonNull
     @Override
