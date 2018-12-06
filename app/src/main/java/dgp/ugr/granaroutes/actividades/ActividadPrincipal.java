@@ -1,6 +1,6 @@
 package dgp.ugr.granaroutes.actividades;
 
-import android.content.ComponentName;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import dgp.ugr.granaroutes.R;
+import dgp.ugr.granaroutes.adaptador_recyclerview.Adaptador;
+import dgp.ugr.granaroutes.data.Ruta;
 import dgp.ugr.granaroutes.fragmentos.FragmentoMapa;
 import dgp.ugr.granaroutes.fragmentos.FragmentoRutas;
 
@@ -26,7 +30,9 @@ import dgp.ugr.granaroutes.fragmentos.FragmentoRutas;
 
 public class ActividadPrincipal extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
-        NavigationView.OnNavigationItemSelectedListener{
+        NavigationView.OnNavigationItemSelectedListener,
+        Adaptador.AdapterOnClickHandler{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +56,6 @@ public class ActividadPrincipal extends AppCompatActivity
     }
 
 
-    //TODO Cambiar este metodo en el fragmento, ya que no se maneja aqui, esto es un Driver
-    /**
-     * Metodo para mostrar la actividad de una ruta detallada
-     */
-    private void irDetallado(){
-        Intent intent = new Intent(this, ActividadRutaDetallada.class);
-        startActivity(intent);
-    }
-
     /**
      * Devuelve "true" si se ha podido hacer la transsicion de un fragmento a otro.
      * En otro caso "false"
@@ -79,6 +76,26 @@ public class ActividadPrincipal extends AppCompatActivity
         return valor;
     }
 
+    /**
+     * Metodo para mostrar la actividad de una ruta detallada
+     */
+    private void irDetallado(Ruta ruta){
+        Intent intent = new Intent(this, ActividadRutaDetallada.class);
+        intent.putExtra("nombre",ruta.getNombre());
+        intent.putExtra("descripcion",ruta.getDescripcion());
+        String[] grupo = new String[ruta.getGrupos().size()];
+        ArrayList<String> lista = new ArrayList<String>(ruta.getGrupos().keySet());
+        for(int i = 0; i < lista.size(); i++)
+            grupo[i] = lista.get(i);
+        intent.putExtra("grupo", grupo);
+        String[] lugares = new String[ruta.getLugares().size()];
+        lista = new ArrayList<String>(ruta.getLugares().keySet());
+        for(int i = 0; i < lista.size(); i++)
+            lugares[i] = lista.get(i);
+        intent.putExtra("lugares", lugares);
+
+        startActivity(intent);
+    }
 
     /**
      * Manejando para ir cambiando de fragmento, en funcion de qué botón se pinche de la barra de
@@ -102,7 +119,6 @@ public class ActividadPrincipal extends AppCompatActivity
                 break;
 
             case R.id.navigation_rutas_favoritas:
-                irDetallado();
                 cargarFragmento = true;
                 break;
 
@@ -157,5 +173,11 @@ public class ActividadPrincipal extends AppCompatActivity
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onClick(Ruta ruta) {
+        irDetallado(ruta);
     }
 }

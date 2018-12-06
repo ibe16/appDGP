@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.JsonReader;
 import android.util.Log;
@@ -28,6 +30,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
+import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 import dgp.ugr.granaroutes.adaptador_recyclerview.Adaptador;
 import dgp.ugr.granaroutes.data.Ruta;
 
@@ -38,52 +41,39 @@ public class FragmentoRutas extends Fragment {
     private RecyclerView recyclerView;
     private ProgressBar cargando;
     private DatabaseReference mDatabase;
-    private DatabaseReference mRutas;
-    private ArrayList<ArrayList<Ruta>> rutas;
-    private ArrayList<String[]> rutasRaw;
-    private ArrayList<Uri> mapas;
-    private JsonReader jsonReader;
+    private ArrayList<Ruta> rutas;
+    ActividadPrincipal actividadPrincipal;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.layout_actividad_rutas, null);
-
+        final View view = inflater.inflate(R.layout.layout_actividad_rutas, null);
+        actividadPrincipal = (ActividadPrincipal) getActivity();
+        rutas = new ArrayList<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        rutasRaw = new ArrayList<>();
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        DatabaseReference rutasDb = mDatabase.child("rutas");
+        rutasDb.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()){
+                    //Firebase añade directamente del JSON los valores a la clase que se especifique
+                    Ruta rutita = d.getValue(Ruta.class);
+                    rutas.add(rutita);
 
-                    rutasRaw.add(d.toString().split("\\{"));
-                    JSONObject jObject = null;
-                    JSONArray rutasArray = null;
-                    try {
-                        jObject = new JSONObject(d.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        rutasArray = jObject.getJSONArray("rutas");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    for (int i=0; i < rutasArray.length(); i++)
-                    {
-                        try {
-                            JSONObject oneObject = rutasArray.getJSONObject(i);
-                            // Pulling items from the array
-                            String oneObjectsItem = oneObject.getString("STRINGNAMEinTHEarray");
-                            String oneObjectsItem2 = oneObject.getString("anotherSTRINGNAMEINtheARRAY");
-                        } catch (JSONException e) {
-                            // Oops
-                        }
-                    }
 
                 }
+
+                recyclerView = view.findViewById(R.id.rv_rutas);
+                cargando = view.findViewById(R.id.pb_loading_indicator);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                Adaptador adaptador = new Adaptador(getContext(),rutas, actividadPrincipal);
+                recyclerView.setAdapter(adaptador);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                        recyclerView.getContext(), LinearLayoutManager.VERTICAL);
+
+                recyclerView.addItemDecoration(dividerItemDecoration);
 
             }
 
@@ -92,14 +82,11 @@ public class FragmentoRutas extends Fragment {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
+
+
         });
 
 
-        //Adaptador adaptador = new Adaptador(this,0);
-
-        recyclerView = view.findViewById(R.id.rv_rutas);
-        cargando = view.findViewById(R.id.pb_loading_indicator);
-        //recyclerView.setAdapter(adaptador);
 
         return view;
     }
