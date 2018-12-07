@@ -1,12 +1,15 @@
 package dgp.ugr.granaroutes.actividades;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,11 +17,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.adaptador_recyclerview.Adaptador;
+import dgp.ugr.granaroutes.adaptador.Adaptador;
 import dgp.ugr.granaroutes.data.Ruta;
 import dgp.ugr.granaroutes.fragmentos.FragmentoMapa;
 import dgp.ugr.granaroutes.fragmentos.FragmentoRutas;
@@ -49,6 +57,17 @@ public class ActividadPrincipal extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.panel_lateral);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView titulo = headerView.findViewById(R.id.titulo_hamburgesa);
+        TextView descripcion = headerView.findViewById(R.id.descripcion_hamburgesa);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null) {
+            titulo.setText(user.getEmail());
+            descripcion.setText(user.getDisplayName());
+        }
+
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -78,6 +97,7 @@ public class ActividadPrincipal extends AppCompatActivity
 
     /**
      * Metodo para mostrar la actividad de una ruta detallada
+     * @param ruta Ruta que se ha pinchado para ser visualizada con mas detalles
      */
     private void irDetallado(Ruta ruta){
         Intent intent = new Intent(this, ActividadRutaDetallada.class);
@@ -113,32 +133,60 @@ public class ActividadPrincipal extends AppCompatActivity
         Fragment fragment = null;
 
         switch (menuItem.getItemId()){
+            case R.id.nav_rutas:
             case R.id.navigation_rutas:
                 fragment = new FragmentoRutas();
                 cargarFragmento = true;
                 break;
-
+            case R.id.nav_rutas_fav:
             case R.id.navigation_rutas_favoritas:
                 cargarFragmento = true;
                 break;
-
+            case R.id.nav_map:
             case R.id.navigation_mapa:
                 fragment = new FragmentoMapa();
                 cargarFragmento = true;
                 break;
 
+            case R.id.nav_perfil:
+                irPreferenciasUsuario();
+                break;
+            case R.id.nav_share:
+                compartirApp();
+                break;
+
         }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
 
         if(cargarFragmento) {
             return cargarFragmento(fragment);
         }
         else{
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
             return true;
         }
 
 
+    }
+
+    private void compartirApp() {
+        String comparte = "Únete a ver tus rutas por Granada con " + getString(R.string.app_name) +" en tu dispositivo favorito\n";
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(comparte + " " + getString(R.string.hastag_code))
+                .getIntent();
+
+
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+
+        startActivity(shareIntent);
+    }
+
+    private void irPreferenciasUsuario() {
+        Intent intent = new Intent(this,PreferenciasUsuario.class);
+        startActivityForResult(intent,1);
     }
 
 
@@ -166,6 +214,9 @@ public class ActividadPrincipal extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -177,7 +228,21 @@ public class ActividadPrincipal extends AppCompatActivity
 
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == 1)
+            if(resultCode == Activity.RESULT_OK)
+                volverInicioSesion();
+
+    }
+
+    @Override
     public void onClick(Ruta ruta) {
         irDetallado(ruta);
+    }
+
+    private void volverInicioSesion(){
+        Intent intent = new Intent(this, ActividadLogIn.class);
+        startActivity(intent);
+        finish();
     }
 }

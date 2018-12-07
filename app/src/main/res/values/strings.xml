@@ -27,8 +27,8 @@
     </string>
     <string name="texto_notificaciones">ASD</string>
     <string name="title_activity_drawer">DRAWER</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Abrir menu hamburguesa</string>
+    <string name="navigation_drawer_close">Cerrar menu hamburguesa</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -38,4 +38,12 @@
     <string name="action_sign_in_google">Iniciar sesión Google</string>
     <string name="action_register_email">Registrarse con correo</string>
     <string name="descripcion_logo_actividad_login">Logo GranáRoutes</string>
+    <string name="nav_preferencias_usuario">Preferencias de Usuario</string>
+    <string name="log_out_button">Cerrar Sesión</string>
+    <string name="delete_button">Borrar cuenta</string>
+    <string name="sesion_cerrada">Sesión Cerrada</string>
+    <string name="cuenta_borrada">Cuenta Borrada</string>
+    <string name="hastag_code">#GranaRoutesApp</string>
+    <string name="compartir_app">Comparte</string>
+    <string name="perfil">Perfil</string>
 </resources>

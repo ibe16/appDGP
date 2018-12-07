@@ -1,4 +1,4 @@
-package dgp.ugr.granaroutes.adaptador_recyclerview;
+package dgp.ugr.granaroutes.adaptador;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

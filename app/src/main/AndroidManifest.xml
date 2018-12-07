@@ -55,6 +55,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".actividades.PreferenciasUsuario"
+            android:theme="@style/AppTheme"
+            android:label="@string/nav_preferencias_usuario">
+        </activity>
+
     </application>
 
 </manifest>
