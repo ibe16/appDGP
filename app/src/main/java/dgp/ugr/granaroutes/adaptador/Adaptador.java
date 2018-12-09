@@ -2,10 +2,12 @@ package dgp.ugr.granaroutes.adaptador;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -43,10 +45,37 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adaptador.RutaViewHolder rutaViewHolder, int position) {
+    public void onBindViewHolder(final @NonNull Adaptador.RutaViewHolder rutaViewHolder,int position) {
         Ruta ruta = rutas.get(position);
         rutaViewHolder.titulo.setText(ruta.getNombre());
         rutaViewHolder.descripcion.setText(ruta.getDescripcion());
+        final int posicion = rutaViewHolder.getAdapterPosition();
+
+        rutaViewHolder.estrella.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                rutas.get(posicion).clickFavorito();
+
+                if(rutas.get(posicion).isFavorito()){
+                    rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_black));
+                    rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_selected));
+                }
+                else{
+                    rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icono_estrella));
+                    rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_normal));
+                }
+            }
+        });
+
+        if(rutas.get(position).isFavorito()){
+            rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_black));
+            rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_selected));
+        }
+        else{
+            rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icono_estrella));
+            rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_normal));
+        }
     }
 
     @Override
@@ -58,6 +87,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
 
         TextView titulo;
         TextView descripcion;
+        ImageButton estrella;
 
 
         RutaViewHolder(@NonNull View itemView) {
@@ -65,6 +95,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
 
             titulo = itemView.findViewById(R.id.descripcion_elemento);
             descripcion = itemView.findViewById(R.id.subdescripcion_elemento);
+            estrella = itemView.findViewById(R.id.icono_estrella);
             itemView.setOnClickListener(this);
         }
 

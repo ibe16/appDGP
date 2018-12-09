@@ -140,6 +140,7 @@ public class ActividadPrincipal extends AppCompatActivity
                 break;
             case R.id.nav_rutas_fav:
             case R.id.navigation_rutas_favoritas:
+                fragment = new FragmentoRutas();
                 cargarFragmento = true;
                 break;
             case R.id.nav_map:

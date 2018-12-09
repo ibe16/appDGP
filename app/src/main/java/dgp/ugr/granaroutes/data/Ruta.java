@@ -3,6 +3,7 @@ package dgp.ugr.granaroutes.data;
 
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,9 +17,11 @@ public class Ruta {
     String map;
     Map<String, Boolean> grupos;
     Map<String, Boolean> lugares;
+    boolean favorito;
 
     public Ruta() {
         numero = contador.incrementAndGet();
+        favorito = false;
     }
 
     public Ruta(String nombre, String descripcion, String map, Map<String, Boolean> grupos, Map<String, Boolean> lugares) {
@@ -28,6 +31,7 @@ public class Ruta {
         this.map = map;
         this.grupos = grupos;
         this.lugares = lugares;
+        favorito = false;
     }
 
     public int getNumero() {
@@ -58,6 +62,10 @@ public class Ruta {
         return lugares;
     }
 
+    public boolean isFavorito() {
+        return favorito;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -78,6 +86,8 @@ public class Ruta {
         this.lugares = lugares;
     }
 
+
+    @NonNull
     @Override
     public String toString() {
         return "Ruta{" +
@@ -88,5 +98,9 @@ public class Ruta {
                 ", grupos=" + grupos +
                 ", lugares=" + lugares +
                 '}';
+    }
+
+    public void clickFavorito() {
+        favorito = !favorito;
     }
 }

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 import dgp.ugr.granaroutes.adaptador.Adaptador;
+import dgp.ugr.granaroutes.data.ContentProvider;
 import dgp.ugr.granaroutes.data.Ruta;
 
 import static android.support.constraint.Constraints.TAG;
@@ -32,8 +33,6 @@ public class FragmentoRutas extends Fragment {
 
     private RecyclerView recyclerView;
     private ProgressBar cargando;
-    private DatabaseReference mDatabase;
-    private ArrayList<Ruta> rutas;
     ActividadPrincipal actividadPrincipal;
 
     @Nullable
@@ -41,31 +40,26 @@ public class FragmentoRutas extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.layout_actividad_rutas, null);
+        //mostrarCargando();
         actividadPrincipal = (ActividadPrincipal) getActivity();
-        rutas = new ArrayList<>();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference rutasDb = mDatabase.child("rutas");
+
         rutasDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                ArrayList<Ruta> rutas = new ArrayList<>();
                 for (DataSnapshot d : dataSnapshot.getChildren()){
                     //Firebase añade directamente del JSON los valores a la clase que se especifique
                     Ruta rutita = d.getValue(Ruta.class);
                     rutas.add(rutita);
-
-
                 }
 
-                recyclerView = view.findViewById(R.id.rv_rutas);
-                cargando = view.findViewById(R.id.pb_loading_indicator);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                Adaptador adaptador = new Adaptador(getContext(),rutas, actividadPrincipal);
-                recyclerView.setAdapter(adaptador);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                        recyclerView.getContext(), LinearLayoutManager.VERTICAL);
+                ContentProvider.getInstance().fetchRutas(rutas);
 
-                recyclerView.addItemDecoration(dividerItemDecoration);
+
+                //mostrarDatos();
 
             }
 
@@ -81,5 +75,15 @@ public class FragmentoRutas extends Fragment {
 
 
         return view;
+    }
+
+    private void mostrarCargando() {
+        recyclerView.setVisibility(View.INVISIBLE);
+        cargando.setVisibility(View.VISIBLE);
+    }
+
+    private void mostrarDatos() {
+        recyclerView.setVisibility(View.VISIBLE);
+        cargando.setVisibility(View.INVISIBLE);
     }
 }
