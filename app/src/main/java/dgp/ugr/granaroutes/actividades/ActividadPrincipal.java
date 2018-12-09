@@ -3,12 +3,14 @@ package dgp.ugr.granaroutes.actividades;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.adaptador.Adaptador;
+import dgp.ugr.granaroutes.data.ContentProvider;
 import dgp.ugr.granaroutes.data.Ruta;
 import dgp.ugr.granaroutes.fragmentos.FragmentoMapa;
 import dgp.ugr.granaroutes.fragmentos.FragmentoRutas;
@@ -113,6 +116,8 @@ public class ActividadPrincipal extends AppCompatActivity
         for(int i = 0; i < lista.size(); i++)
             lugares[i] = lista.get(i);
         intent.putExtra("lugares", lugares);
+        intent.putExtra("favorito", ruta.isFavorito());
+        intent.putExtra("id", ruta.getNumero());
 
         startActivity(intent);
     }
@@ -135,11 +140,13 @@ public class ActividadPrincipal extends AppCompatActivity
         switch (menuItem.getItemId()){
             case R.id.nav_rutas:
             case R.id.navigation_rutas:
+                ContentProvider.getInstance().ordenaPorNumero();
                 fragment = new FragmentoRutas();
                 cargarFragmento = true;
                 break;
             case R.id.nav_rutas_fav:
             case R.id.navigation_rutas_favoritas:
+                ContentProvider.getInstance().ordenaPorFavorito();
                 fragment = new FragmentoRutas();
                 cargarFragmento = true;
                 break;

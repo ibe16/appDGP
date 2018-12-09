@@ -48,7 +48,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
     public void onBindViewHolder(final @NonNull Adaptador.RutaViewHolder rutaViewHolder,int position) {
         Ruta ruta = rutas.get(position);
         rutaViewHolder.titulo.setText(ruta.getNombre());
-        rutaViewHolder.descripcion.setText(ruta.getDescripcion());
+        rutaViewHolder.descripcion.setText(ruta.getDescripcion().trim());
         final int posicion = rutaViewHolder.getAdapterPosition();
 
         rutaViewHolder.estrella.setOnClickListener(new View.OnClickListener() {

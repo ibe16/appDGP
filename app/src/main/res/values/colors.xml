@@ -5,4 +5,6 @@
     <color name="colorAccent">#910926</color>
     <color name="icon_tint_normal">#7a7a7a</color>
     <color name="icon_tint_selected">#fed776</color>
+    <color name="colorWhite">#FFF</color>
+    <color name="colorBlack">#000</color>
 </resources>

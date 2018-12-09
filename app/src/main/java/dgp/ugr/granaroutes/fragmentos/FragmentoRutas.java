@@ -25,54 +25,32 @@ import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 import dgp.ugr.granaroutes.adaptador.Adaptador;
 import dgp.ugr.granaroutes.data.ContentProvider;
+import dgp.ugr.granaroutes.data.DataListener;
 import dgp.ugr.granaroutes.data.Ruta;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class FragmentoRutas extends Fragment {
+public class FragmentoRutas extends Fragment implements DataListener{
 
     private RecyclerView recyclerView;
     private ProgressBar cargando;
-    ActividadPrincipal actividadPrincipal;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.layout_actividad_rutas, null);
-        //mostrarCargando();
-        actividadPrincipal = (ActividadPrincipal) getActivity();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference rutasDb = mDatabase.child("rutas");
-
-        rutasDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                ArrayList<Ruta> rutas = new ArrayList<>();
-                for (DataSnapshot d : dataSnapshot.getChildren()){
-                    //Firebase añade directamente del JSON los valores a la clase que se especifique
-                    Ruta rutita = d.getValue(Ruta.class);
-                    rutas.add(rutita);
-                }
-
-                ContentProvider.getInstance().fetchRutas(rutas);
+        View view = inflater.inflate(R.layout.layout_actividad_rutas, null);
+        recyclerView = view.findViewById(R.id.rv_rutas);
+        cargando = view.findViewById(R.id.pb_loading_indicator);
 
 
-                //mostrarDatos();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-
-
-        });
-
-
+        if(ContentProvider.getInstance().getRutas() == null || ContentProvider.getInstance().getRutas().isEmpty()) {
+            mostrarCargando();
+            ContentProvider.getInstance().leerRutas(this);
+        }
+        else{
+            lecturaTerminada();
+        }
 
         return view;
     }
@@ -86,4 +64,19 @@ public class FragmentoRutas extends Fragment {
         recyclerView.setVisibility(View.VISIBLE);
         cargando.setVisibility(View.INVISIBLE);
     }
+
+
+    @Override
+    public void lecturaTerminada() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Adaptador adaptador = new Adaptador(getContext(), ContentProvider.getInstance().getRutas(), (ActividadPrincipal) getActivity());
+        recyclerView.setAdapter(adaptador);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(), LinearLayoutManager.VERTICAL);
+
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        mostrarDatos();
+    }
+
 }

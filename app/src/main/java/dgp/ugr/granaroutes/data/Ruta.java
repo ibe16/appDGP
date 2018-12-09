@@ -11,13 +11,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Ruta {
     private static final AtomicInteger contador = new AtomicInteger(0);
-    int numero;
-    String nombre;
-    String descripcion;
-    String map;
-    Map<String, Boolean> grupos;
-    Map<String, Boolean> lugares;
-    boolean favorito;
+    private int numero;
+    private String nombre;
+    private String descripcion;
+    private String map;
+    private Map<String, Boolean> grupos;
+    private Map<String, Boolean> lugares;
+    private boolean favorito;
 
     public Ruta() {
         numero = contador.incrementAndGet();
@@ -103,4 +103,5 @@ public class Ruta {
     public void clickFavorito() {
         favorito = !favorito;
     }
+
 }

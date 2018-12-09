@@ -22,7 +22,6 @@ import dgp.ugr.granaroutes.R;
 
 public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
 
-    private GoogleMap mapa;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,8 +63,8 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
         intent.setComponent(ComponentName.unflattenFromString("com.google.android.apps.maps/com.google.android.maps.MapsActivity"));
         intent.addCategory("android.intent.category.LAUNCHER");
         // replace string with your Google My Map URL
-        Uri uri2 = Uri.parse("https://www.google.com/maps/d/u/1/edit?mid=1wDF2RY3sjyRSVQcdZCG916h8m9riQyga&ll=37.160344530940435%2C-3.685380214819361&z=15");
-        intent.setData(uri2);
+        Uri uri = Uri.parse("https://www.google.com/maps/d/u/1/edit?mid=1wDF2RY3sjyRSVQcdZCG916h8m9riQyga&ll=37.160344530940435%2C-3.685380214819361&z=15");
+        intent.setData(uri);
         startActivity(intent);
     }
 }
