@@ -1,5 +1,6 @@
 package dgp.ugr.granaroutes.actividades;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
@@ -76,11 +77,7 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         mapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = null;
-                for(int i = 0; i < ContentProvider.getInstance().getRutas().size(); i++){
-                    if(ContentProvider.getInstance().getRutas().get(i).getNumero() == numero)
-                        uri = ContentProvider.getInstance().getRutas().get(i).getMapUri();
-                }
+                Uri uri = ContentProvider.getInstance().getRutas().get(numero).getMapUri();
 
                 Intent intent = new Intent("android.intent.action.VIEW");
                 intent.setComponent(ComponentName.unflattenFromString("com.google.android.apps.maps/com.google.android.maps.MapsActivity"));
@@ -93,15 +90,16 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         favorito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i = 0; i < ContentProvider.getInstance().getRutas().size(); i++){
-                    if(ContentProvider.getInstance().getRutas().get(i).getNumero() == numero) {
-                        ContentProvider.getInstance().getRutas().get(i).clickFavorito();
-                        rutaFavorita = !rutaFavorita;
-                        esFavorito();
-                    }
-                }
-
+                ContentProvider.getInstance().getRutas().get(numero).clickFavorito();
+                rutaFavorita = !rutaFavorita;
+                esFavorito();
+                Intent data = new Intent();
+                data.putExtra("posicion", numero);
+                setResult(RESULT_OK, data);
             }
+
+
+
         });
 
         esFavorito();
@@ -119,4 +117,9 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

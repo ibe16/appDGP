@@ -34,6 +34,7 @@ public class FragmentoRutas extends Fragment implements DataListener{
 
     private RecyclerView recyclerView;
     private ProgressBar cargando;
+    private Adaptador adaptador;
 
     @Nullable
     @Override
@@ -42,6 +43,7 @@ public class FragmentoRutas extends Fragment implements DataListener{
         View view = inflater.inflate(R.layout.layout_actividad_rutas, null);
         recyclerView = view.findViewById(R.id.rv_rutas);
         cargando = view.findViewById(R.id.pb_loading_indicator);
+
 
 
         if(ContentProvider.getInstance().getRutas() == null || ContentProvider.getInstance().getRutas().isEmpty()) {
@@ -70,13 +72,17 @@ public class FragmentoRutas extends Fragment implements DataListener{
     public void lecturaTerminada() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        Adaptador adaptador = new Adaptador(getContext(), ContentProvider.getInstance().getRutas(), (ActividadPrincipal) getActivity());
+        adaptador = new Adaptador(getContext(), ContentProvider.getInstance().getRutas(), (ActividadPrincipal) getActivity());
         recyclerView.setAdapter(adaptador);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 
         recyclerView.addItemDecoration(dividerItemDecoration);
+
         mostrarDatos();
     }
 
+    public Adaptador getAdaptador() {
+        return adaptador;
+    }
 }

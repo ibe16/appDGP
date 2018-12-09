@@ -4,6 +4,7 @@ package dgp.ugr.granaroutes.actividades;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +45,7 @@ public class ActividadPrincipal extends AppCompatActivity
         NavigationView.OnNavigationItemSelectedListener,
         Adaptador.AdapterOnClickHandler{
 
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,8 @@ public class ActividadPrincipal extends AppCompatActivity
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-        cargarFragmento(new FragmentoRutas());
+        fragment = new FragmentoRutas();
+        cargarFragmento(fragment);
     }
 
 
@@ -101,8 +104,9 @@ public class ActividadPrincipal extends AppCompatActivity
     /**
      * Metodo para mostrar la actividad de una ruta detallada
      * @param ruta Ruta que se ha pinchado para ser visualizada con mas detalles
+     * @param posicion Posición de la ruta en la colección de elementos
      */
-    private void irDetallado(Ruta ruta){
+    private void irDetallado(Ruta ruta, int posicion){
         Intent intent = new Intent(this, ActividadRutaDetallada.class);
         intent.putExtra("nombre",ruta.getNombre());
         intent.putExtra("descripcion",ruta.getDescripcion());
@@ -117,9 +121,9 @@ public class ActividadPrincipal extends AppCompatActivity
             lugares[i] = lista.get(i);
         intent.putExtra("lugares", lugares);
         intent.putExtra("favorito", ruta.isFavorito());
-        intent.putExtra("id", ruta.getNumero());
+        intent.putExtra("id", posicion);
 
-        startActivity(intent);
+        startActivityForResult(intent,2);
     }
 
     /**
@@ -135,7 +139,6 @@ public class ActividadPrincipal extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         boolean cargarFragmento = false;
-        Fragment fragment = null;
 
         switch (menuItem.getItemId()){
             case R.id.nav_rutas:
@@ -237,15 +240,22 @@ public class ActividadPrincipal extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == 1)
-            if(resultCode == Activity.RESULT_OK)
+        if(requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK)
                 volverInicioSesion();
+        }
+        else if (requestCode == 2){
+            if(resultCode == Activity.RESULT_OK) {
+                FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
+                fragmentoRutas.getAdaptador().notifyItemChanged(data.getIntExtra("posicion",0));
+            }
+        }
 
     }
 
     @Override
-    public void onClick(Ruta ruta) {
-        irDetallado(ruta);
+    public void onClick(Ruta ruta, int posicion) {
+        irDetallado(ruta, posicion);
     }
 
     private void volverInicioSesion(){
@@ -253,4 +263,5 @@ public class ActividadPrincipal extends AppCompatActivity
         startActivity(intent);
         finish();
     }
+
 }
