@@ -47,4 +47,5 @@
     <string name="compartir_app">Comparte</string>
     <string name="perfil">Perfil</string>
     <string name="mostrar_ruta_mapa">Mostrar ruta en el mapa</string>
+    <string name="descripcion_cartel_no_rutas">No hay rutas, asegurese de haber hecho favorita una</string>
 </resources>

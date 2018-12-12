@@ -34,6 +34,7 @@ import dgp.ugr.granaroutes.data.ContentProvider;
 import dgp.ugr.granaroutes.data.Ruta;
 import dgp.ugr.granaroutes.fragmentos.FragmentoMapa;
 import dgp.ugr.granaroutes.fragmentos.FragmentoRutas;
+import dgp.ugr.granaroutes.fragmentos.FragmentoRutasFavoritas;
 
 
 /**
@@ -46,6 +47,7 @@ public class ActividadPrincipal extends AppCompatActivity
         Adaptador.AdapterOnClickHandler{
 
     private Fragment fragment;
+    private String etiqueta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,20 +145,22 @@ public class ActividadPrincipal extends AppCompatActivity
         switch (menuItem.getItemId()){
             case R.id.nav_rutas:
             case R.id.navigation_rutas:
-                ContentProvider.getInstance().ordenaPorNumero();
                 fragment = new FragmentoRutas();
                 cargarFragmento = true;
+                etiqueta = "navigation_rutas";
                 break;
             case R.id.nav_rutas_fav:
             case R.id.navigation_rutas_favoritas:
-                ContentProvider.getInstance().ordenaPorFavorito();
-                fragment = new FragmentoRutas();
+                ContentProvider.getInstance().ordenaPorNumero();
+                fragment = new FragmentoRutasFavoritas();
                 cargarFragmento = true;
+                etiqueta = "navigation_rutas_favoritas";
                 break;
             case R.id.nav_map:
             case R.id.navigation_mapa:
                 fragment = new FragmentoMapa();
                 cargarFragmento = true;
+                etiqueta = "navigation_mapa";
                 break;
 
             case R.id.nav_perfil:
@@ -245,9 +249,8 @@ public class ActividadPrincipal extends AppCompatActivity
                 volverInicioSesion();
         }
         else if (requestCode == 2){
-            if(resultCode == Activity.RESULT_OK) {
-                FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
-                fragmentoRutas.getAdaptador().notifyItemChanged(data.getIntExtra("posicion",0));
+            if(resultCode == Activity.RESULT_OK && data != null) {
+                reorganizarDatos();
             }
         }
 
@@ -256,6 +259,18 @@ public class ActividadPrincipal extends AppCompatActivity
     @Override
     public void onClick(Ruta ruta, int posicion) {
         irDetallado(ruta, posicion);
+    }
+
+    @Override
+    public void reorganizarDatos() {
+        if(etiqueta.equals("navigation_rutas") ) {
+            FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
+            fragmentoRutas.getAdaptador().notifyDataSetChanged();
+        }
+        else if(etiqueta.equals("navigation_rutas_favoritas") ) {
+            FragmentoRutasFavoritas fragmentoRutas = (FragmentoRutasFavoritas) fragment;
+            fragmentoRutas.getAdaptador().notifyDataSetChanged();
+        }
     }
 
     private void volverInicioSesion(){

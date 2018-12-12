@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
+import dgp.ugr.granaroutes.data.ContentProvider;
 import dgp.ugr.granaroutes.data.Ruta;
 
 
@@ -27,6 +28,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
 
     public interface AdapterOnClickHandler{
         void onClick(Ruta ruta, int posicion);
+
+        void reorganizarDatos();
     }
 
 
@@ -55,20 +58,17 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
             @Override
             public void onClick(View view) {
 
+                ContentProvider.getInstance().aniadeRutaFavorita(posicion);
                 rutas.get(posicion).clickFavorito();
-
-                if(rutas.get(posicion).isFavorito()){
-                    rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_black));
-                    rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_selected));
-                }
-                else{
-                    rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icono_estrella));
-                    rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_normal));
-                }
+                pintarEstrella(rutaViewHolder, posicion);
             }
         });
 
-        if(rutas.get(position).isFavorito()){
+        pintarEstrella(rutaViewHolder, posicion);
+    }
+
+    private void pintarEstrella(Adaptador.RutaViewHolder rutaViewHolder, int posicion){
+        if(rutas.get(posicion).isFavorito()){
             rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_black));
             rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_selected));
         }

@@ -63,7 +63,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
         intent.setComponent(ComponentName.unflattenFromString("com.google.android.apps.maps/com.google.android.maps.MapsActivity"));
         intent.addCategory("android.intent.category.LAUNCHER");
         // replace string with your Google My Map URL
-        Uri uri = Uri.parse("https://www.google.com/maps/d/u/1/edit?mid=1wDF2RY3sjyRSVQcdZCG916h8m9riQyga&ll=37.160344530940435%2C-3.685380214819361&z=15");
+        Uri uri = Uri.parse("https://www.google.com/maps/d/u/1/viewer?ll=37.16188504127159%2C-3.681225026642096&z=14&mid=1jwDsNlODaJ53eT_DB7YrcCNSV4hLe_zk");
         intent.setData(uri);
         startActivity(intent);
     }

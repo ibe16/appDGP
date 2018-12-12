@@ -21,6 +21,7 @@ import static android.support.constraint.Constraints.TAG;
 public class ContentProvider implements Serializable {
 
     private static ArrayList<Ruta> rutas;
+    private static ArrayList<Ruta> rutasFavoritas;
     private static volatile ContentProvider instanciado;
 
     //private constructor.
@@ -33,7 +34,7 @@ public class ContentProvider implements Serializable {
     }
 
     public static ContentProvider getInstance() {
-        if (instanciado == null) { //if there is no instance available... create new one
+        if (instanciado == null) {
             synchronized (ContentProvider.class) {
                 if (instanciado == null) instanciado = new ContentProvider();
             }
@@ -61,6 +62,7 @@ public class ContentProvider implements Serializable {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 rutas = new ArrayList<>();
+                rutasFavoritas = new ArrayList<>();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     //Firebase añade directamente del JSON los valores a la clase que se especifique
                     Ruta rutita = d.getValue(Ruta.class);
@@ -81,25 +83,20 @@ public class ContentProvider implements Serializable {
         });
     }
 
-    public void ordenaPorNumero(){
-        Collections.sort(rutas, new Comparator<Ruta>(){
-            public int compare(Ruta r1, Ruta r2){
-                return r1.getNumero() - r2.getNumero();
-            }
-        });
+
+    public ArrayList<Ruta> getRutasFavoritas() {
+        return rutasFavoritas;
     }
 
-    public void ordenaPorFavorito(){
-        Collections.sort(rutas, new Comparator<Ruta>(){
+
+    public void aniadeRutaFavorita(int posicion){
+        rutasFavoritas.add(rutas.get(posicion));
+    }
+
+    public void ordenaPorNumero(){
+        Collections.sort(rutasFavoritas, new Comparator<Ruta>(){
             public int compare(Ruta r1, Ruta r2){
-                int esMenor = -1;
-                int esMayor = 1;
-                if(r1.isFavorito() && r2.isFavorito())
-                    return r1.getNumero() - r2.getNumero();
-                else if(r1.isFavorito() && !r2.isFavorito())
-                    return esMenor;
-                else
-                    return esMayor;
+                return r1.getNumero() - r2.getNumero();
             }
         });
     }
