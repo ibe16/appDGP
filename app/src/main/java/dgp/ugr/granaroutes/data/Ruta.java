@@ -18,12 +18,13 @@ public class Ruta {
     private Map<String, Boolean> grupos;
     private Map<String, Boolean> lugares;
     private boolean favorito;
+    private String imagen;
 
     public Ruta() {
         numero = contador.incrementAndGet();
         favorito = false;
     }
-
+/*
     public Ruta(String nombre, String descripcion, String map, Map<String, Boolean> grupos, Map<String, Boolean> lugares) {
         numero = contador.incrementAndGet();
         this.nombre = nombre;
@@ -32,7 +33,9 @@ public class Ruta {
         this.grupos = grupos;
         this.lugares = lugares;
         favorito = false;
-    }
+    }*/
+
+
 
     public int getNumero() {
         return numero;
@@ -86,6 +89,13 @@ public class Ruta {
         this.lugares = lugares;
     }
 
+    public Uri getImagen() {
+        return Uri.parse(imagen);
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
     @NonNull
     @Override

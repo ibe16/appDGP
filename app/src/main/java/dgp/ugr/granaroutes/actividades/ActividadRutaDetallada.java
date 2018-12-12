@@ -23,6 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,7 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         TextView grupos;
         TextView lugares;
         ImageView mapa;
+        ImageView ruta;
 
 
         titulo = findViewById(R.id.titulo_ruta);
@@ -56,6 +58,10 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         lugares = findViewById(R.id.lugares_ruta);
         mapa = findViewById(R.id.imagen_mostrar_ruta_en_mapa);
         favorito = findViewById(R.id.imagen_favorito_ruta);
+        ruta = findViewById(R.id.imagen_ruta);
+
+
+
 
         rutaFavorita = intent.getBooleanExtra("favorito",false);
 
@@ -105,6 +111,12 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         });
 
         esFavorito();
+
+
+        Picasso.with(this)
+                .load(ContentProvider.getInstance().getRutas().get(numero).getImagen())
+                .error(R.drawable.common_google_signin_btn_icon_dark)
+                .into(ruta);
 
     }
 

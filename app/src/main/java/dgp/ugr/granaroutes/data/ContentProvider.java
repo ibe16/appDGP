@@ -84,37 +84,7 @@ public class ContentProvider implements Serializable {
 
         });
     }
-//TODO leerImagenesDeRutas
-    /*
-    public void leerImagenesDeRutas() {
-        StorageReference mDatabase =  FirebaseStorage.getInstance().getReference();
-        mDatabase
 
-        rutasDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                rutas = new ArrayList<>();
-                rutasFavoritas = new ArrayList<>();
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    //Firebase añade directamente del JSON los valores a la clase que se especifique
-                    Ruta rutita = d.getValue(Ruta.class);
-                    rutas.add(rutita);
-                }
-
-                escuchador.lecturaTerminada();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-
-
-        });
-    }*/
 
 
 
