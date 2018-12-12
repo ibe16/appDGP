@@ -33,23 +33,20 @@ import dgp.ugr.granaroutes.data.Ruta;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class FragmentoRutasFavoritas extends Fragment implements DataListener{
+public class FragmentoRutasFavoritas extends FragmentoRutas{
 
-    private RecyclerView recyclerView;
     private TextView cartelNoRutas;
-    private Adaptador adaptador;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.layout_actividad_rutas_favoritas, null);
         recyclerView = view.findViewById(R.id.rv_rutas_favoritas);
         cartelNoRutas = view.findViewById(R.id.no_rutas);
 
         if(ContentProvider.getInstance().getRutasFavoritas() == null ||
                 ContentProvider.getInstance().getRutasFavoritas().isEmpty()) {
-            mostrarNoHayFavoritas();
+            mostrarNoHayDatos();
         }
         else{
             lecturaTerminada();
@@ -58,16 +55,18 @@ public class FragmentoRutasFavoritas extends Fragment implements DataListener{
         return view;
     }
 
-    private void mostrarNoHayFavoritas() {
+    @Override
+    public void mostrarNoHayDatos() {
         recyclerView.setVisibility(View.INVISIBLE);
         cartelNoRutas.setVisibility(View.VISIBLE);
     }
 
-    private void mostrarDatos() {
+
+    @Override
+    public void mostrarDatos() {
         recyclerView.setVisibility(View.VISIBLE);
         cartelNoRutas.setVisibility(View.INVISIBLE);
     }
-
 
     @Override
     public void lecturaTerminada() {
@@ -82,15 +81,4 @@ public class FragmentoRutasFavoritas extends Fragment implements DataListener{
 
         mostrarDatos();
     }
-
-    @Override
-    public void reorganizarDatos() {
-
-    }
-
-    public Adaptador getAdaptador() {
-        return adaptador;
-    }
-
 }
-

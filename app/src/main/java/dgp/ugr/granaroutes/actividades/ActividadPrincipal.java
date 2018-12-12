@@ -47,7 +47,6 @@ public class ActividadPrincipal extends AppCompatActivity
         Adaptador.AdapterOnClickHandler{
 
     private Fragment fragment;
-    private String etiqueta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,20 +146,17 @@ public class ActividadPrincipal extends AppCompatActivity
             case R.id.navigation_rutas:
                 fragment = new FragmentoRutas();
                 cargarFragmento = true;
-                etiqueta = "navigation_rutas";
                 break;
             case R.id.nav_rutas_fav:
             case R.id.navigation_rutas_favoritas:
                 ContentProvider.getInstance().ordenaPorNumero();
                 fragment = new FragmentoRutasFavoritas();
                 cargarFragmento = true;
-                etiqueta = "navigation_rutas_favoritas";
                 break;
             case R.id.nav_map:
             case R.id.navigation_mapa:
                 fragment = new FragmentoMapa();
                 cargarFragmento = true;
-                etiqueta = "navigation_mapa";
                 break;
 
             case R.id.nav_perfil:
@@ -263,14 +259,14 @@ public class ActividadPrincipal extends AppCompatActivity
 
     @Override
     public void reorganizarDatos() {
-        if(etiqueta.equals("navigation_rutas") ) {
-            FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
-            fragmentoRutas.getAdaptador().notifyDataSetChanged();
-        }
-        else if(etiqueta.equals("navigation_rutas_favoritas") ) {
-            FragmentoRutasFavoritas fragmentoRutas = (FragmentoRutasFavoritas) fragment;
-            fragmentoRutas.getAdaptador().notifyDataSetChanged();
-        }
+        FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
+        fragmentoRutas.getAdaptador().notifyDataSetChanged();
+    }
+
+    @Override
+    public void muestraNoDatos() {
+        FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
+        fragmentoRutas.mostrarNoHayDatos();
     }
 
     private void volverInicioSesion(){

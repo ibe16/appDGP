@@ -28,8 +28,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
 
     public interface AdapterOnClickHandler{
         void onClick(Ruta ruta, int posicion);
-
         void reorganizarDatos();
+        void muestraNoDatos();
     }
 
 
@@ -49,7 +49,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
 
     @Override
     public void onBindViewHolder(final @NonNull Adaptador.RutaViewHolder rutaViewHolder,int position) {
-        Ruta ruta = rutas.get(position);
+        final Ruta ruta = rutas.get(position);
         rutaViewHolder.titulo.setText(ruta.getNombre());
         rutaViewHolder.descripcion.setText(ruta.getDescripcion().trim());
         final int posicion = rutaViewHolder.getAdapterPosition();
@@ -57,10 +57,20 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
         rutaViewHolder.estrella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ContentProvider.getInstance().aniadeRutaFavorita(posicion);
                 rutas.get(posicion).clickFavorito();
-                pintarEstrella(rutaViewHolder, posicion);
+                if(rutas.get(posicion).isFavorito()){
+                    ContentProvider.getInstance().aniadeRutaFavorita(posicion);
+                }
+                else{
+                    ContentProvider.getInstance().quitaRutaFavorita(rutas.get(posicion));
+                    notifyDataSetChanged();
+                }
+                if(getItemCount() > 0)
+                    pintarEstrella(rutaViewHolder, posicion);
+                else
+                    clickHandler.muestraNoDatos();
+
+
             }
         });
 

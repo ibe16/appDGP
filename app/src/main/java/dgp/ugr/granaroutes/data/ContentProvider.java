@@ -9,6 +9,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -82,6 +84,38 @@ public class ContentProvider implements Serializable {
 
         });
     }
+//TODO leerImagenesDeRutas
+    /*
+    public void leerImagenesDeRutas() {
+        StorageReference mDatabase =  FirebaseStorage.getInstance().getReference();
+        mDatabase
+
+        rutasDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                rutas = new ArrayList<>();
+                rutasFavoritas = new ArrayList<>();
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    //Firebase añade directamente del JSON los valores a la clase que se especifique
+                    Ruta rutita = d.getValue(Ruta.class);
+                    rutas.add(rutita);
+                }
+
+                escuchador.lecturaTerminada();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+
+
+        });
+    }*/
+
 
 
     public ArrayList<Ruta> getRutasFavoritas() {
@@ -101,5 +135,10 @@ public class ContentProvider implements Serializable {
         });
     }
 
+    public void quitaRutaFavorita(Ruta ruta) {
+        if(rutasFavoritas.indexOf(ruta) >= 0)
+            rutasFavoritas.remove(ruta);
+
+    }
 }
 

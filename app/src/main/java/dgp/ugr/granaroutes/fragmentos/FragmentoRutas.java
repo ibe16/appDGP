@@ -7,34 +7,22 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 import dgp.ugr.granaroutes.adaptador.Adaptador;
 import dgp.ugr.granaroutes.data.ContentProvider;
 import dgp.ugr.granaroutes.data.DataListener;
-import dgp.ugr.granaroutes.data.Ruta;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class FragmentoRutas extends Fragment implements DataListener{
 
-    private RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
     private ProgressBar cargando;
-    private Adaptador adaptador;
+    protected Adaptador adaptador;
 
     @Nullable
     @Override
@@ -47,7 +35,7 @@ public class FragmentoRutas extends Fragment implements DataListener{
 
 
         if(ContentProvider.getInstance().getRutas() == null || ContentProvider.getInstance().getRutas().isEmpty()) {
-            mostrarCargando();
+            mostrarNoHayDatos();
             ContentProvider.getInstance().leerRutas(this);
         }
         else{
@@ -57,12 +45,12 @@ public class FragmentoRutas extends Fragment implements DataListener{
         return view;
     }
 
-    private void mostrarCargando() {
+    public void mostrarNoHayDatos() {
         recyclerView.setVisibility(View.INVISIBLE);
         cargando.setVisibility(View.VISIBLE);
     }
 
-    private void mostrarDatos() {
+    public void mostrarDatos() {
         recyclerView.setVisibility(View.VISIBLE);
         cargando.setVisibility(View.INVISIBLE);
     }
@@ -90,5 +78,4 @@ public class FragmentoRutas extends Fragment implements DataListener{
     public Adaptador getAdaptador() {
         return adaptador;
     }
-
 }
