@@ -95,9 +95,8 @@ public class ActividadPrincipal extends AppCompatActivity
     /**
      * Metodo para mostrar la actividad de una ruta detallada
      * @param ruta Ruta que se ha pinchado para ser visualizada con mas detalles
-     * @param posicion Posicion de la ruta en la colección de elementos
      */
-    private void irDetallado(Ruta ruta, int posicion){
+    private void irDetallado(Ruta ruta){
         Intent intent = new Intent(this, ActividadRutaDetallada.class);
         intent.putExtra("nombre",ruta.getNombre());
         intent.putExtra("descripcion",ruta.getDescripcion());
@@ -112,7 +111,7 @@ public class ActividadPrincipal extends AppCompatActivity
             lugares[i] = lista.get(i);
         intent.putExtra("lugares", lugares);
         intent.putExtra("favorito", ruta.isFavorito());
-        intent.putExtra("id", posicion);
+        intent.putExtra("id", ruta.getNumero());
 
         startActivityForResult(intent,2);
     }
@@ -216,8 +215,8 @@ public class ActividadPrincipal extends AppCompatActivity
     }
 
     @Override
-    public void onClick(Ruta ruta, int posicion) {
-        irDetallado(ruta, posicion);
+    public void onClick(Ruta ruta) {
+        irDetallado(ruta);
     }
 
     @Override

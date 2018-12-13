@@ -27,7 +27,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
 
 
     public interface AdapterOnClickHandler{
-        void onClick(Ruta ruta, int posicion);
+        void onClick(Ruta ruta);
+
         void reorganizarDatos();
         void muestraNoHayDatos();
     }
@@ -113,7 +114,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             Ruta ruta = rutas.get(adapterPosition);
-            clickHandler.onClick(ruta, adapterPosition);
+            clickHandler.onClick(ruta);
         }
     }
 }

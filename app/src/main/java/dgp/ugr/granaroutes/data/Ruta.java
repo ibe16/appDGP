@@ -10,12 +10,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Se quita la inspeccion, puesto que dice que los constructores no son utilizados
- * y son necesarios para incrustar los datos desde Firebase.
+ * y son necesarios para incrustar los datos desde Firebase:
+ * Se necesita una Clase con Constructor por defecto (sin parametros)
+ * Se necesita Getters de todos los parametros.
  */
 
 @SuppressWarnings("unused")
 public class Ruta {
-    private static final AtomicInteger contador = new AtomicInteger(0);
+    private static final AtomicInteger contador = new AtomicInteger(-1);
     private int numero;
     private String nombre;
     private String descripcion;
@@ -44,7 +46,7 @@ public class Ruta {
 
 
 
-    int getNumero() {
+    public int getNumero() {
         return numero;
     }
 
@@ -60,6 +62,9 @@ public class Ruta {
         return Uri.parse(map);
     }
 
+    public String getMap(){
+        return map;
+    }
     public Map<String, Boolean>getGrupos() {
         return grupos;
     }
