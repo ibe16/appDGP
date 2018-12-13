@@ -41,11 +41,6 @@ public class ProveedorContenidos implements Serializable {
         return instanciado;
     }
 
-    //Método para hacer que el singleton no sirva con serializaciones y deserializaciones.
-    protected ProveedorContenidos readResolve() {
-        return getInstance();
-    }
-
 
     public ArrayList<Ruta> getRutas() {
         return rutas;

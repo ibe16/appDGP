@@ -7,6 +7,13 @@ import android.support.annotation.NonNull;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * Se quita la inspeccion, puesto que dice que los constructores no son utilizados
+ * y son necesarios para incrustar los datos desde Firebase.
+ */
+
+@SuppressWarnings("unused")
 public class Ruta {
     private static final AtomicInteger contador = new AtomicInteger(0);
     private int numero;
@@ -22,6 +29,19 @@ public class Ruta {
         numero = contador.incrementAndGet();
         favorito = false;
     }
+
+    public Ruta(String nombre, String descripcion, String map, Map<String, Boolean> grupos,
+                Map<String, Boolean> lugares, String imagen) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.map = map;
+        this.grupos = grupos;
+        this.lugares = lugares;
+        this.imagen = imagen;
+        numero = contador.incrementAndGet();
+        favorito = false;
+    }
+
 
 
     int getNumero() {
@@ -50,30 +70,6 @@ public class Ruta {
 
     public boolean isFavorito() {
         return favorito;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public void setMap(String map) {
-        this.map = map;
-    }
-
-    public void setGrupos(Map<String, Boolean> grupos) {
-        this.grupos = grupos;
-    }
-
-    public void setLugares(Map<String, Boolean> lugares) {
-        this.lugares = lugares;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
     }
 
     public Uri getImagen() {
