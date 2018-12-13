@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:focusable="true"
-        android:contentDescription="@string/pruebas">
+        android:contentDescription="@string/conenedor_rutas_descripcion">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_rutas"

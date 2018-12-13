@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/detallado_favorito"
+        android:icon="@drawable/estrella_detallada_no_fav"
+        android:contentDescription="@string/rutas_descripcion_favoritos"
+        android:title="@string/rutas_descripcion_favoritos"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/detallado_mapa"
+        android:icon="@drawable/ic_map_blanco"
+        android:contentDescription="@string/rutas_descripcion_mapa"
+        android:title="@string/rutas_descripcion_mapa"
+        app:showAsAction="ifRoom"/>
+
+</menu>

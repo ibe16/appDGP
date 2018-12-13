@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,13 +23,13 @@ public class ActividadRutaDetallada extends AppCompatActivity {
 
 
     private int numero;
-    private ImageView favorito;
     private boolean esRutaFavorita;
     private TextView titulo;
     private TextView descripcion;
     private TextView grupos;
     private TextView lugares;
     private ImageView ruta;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,32 +43,14 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         descripcion = findViewById(R.id.descripcion_ruta);
         grupos = findViewById(R.id.grupos_ruta);
         lugares = findViewById(R.id.lugares_ruta);
-        favorito = findViewById(R.id.imagen_favorito_ruta);
         ruta = findViewById(R.id.imagen_ruta);
 
-        ImageView mapa = findViewById(R.id.imagen_mostrar_ruta_en_mapa);
 
 
         inicializarVariables();
 
         insertarImagen();
 
-        mapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                irAlMapa();
-            }
-        });
-
-        favorito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickFavorito();
-            }
-
-        });
-
-        compruebaFavorito();
     }
 
     private void compruebaFavorito(){
@@ -99,13 +84,13 @@ public class ActividadRutaDetallada extends AppCompatActivity {
     }
 
     private void pintaFavorito(){
-        favorito.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_black));
-        favorito.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.icon_tint_selected));
+        MenuItem item = menu.findItem(R.id.detallado_favorito);
+        item.setIcon(getDrawable(R.drawable.estrella_detallada_fav));
     }
 
     private void deshacerPintura(){
-        favorito.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.icono_estrella));
-        favorito.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.icon_tint_normal));
+        MenuItem item = menu.findItem(R.id.detallado_favorito);
+        item.setIcon(getDrawable(R.drawable.estrella_detallada_no_fav));
     }
 
     private void insertarImagen(){
@@ -160,6 +145,27 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.ruta_detallada,menu);
+        this.menu = menu;
 
+        compruebaFavorito();
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.detallado_favorito:
+                clickFavorito();
+                break;
+            case R.id.detallado_mapa:
+                irAlMapa();
+                break;
+        }
+
+        return false;
+    }
 }

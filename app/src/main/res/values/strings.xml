@@ -1,38 +1,30 @@
 <resources>
-    <string name="app_name" translatable="false">GranaRoutes</string>
     <string name="title_activity_actividad_principal">Inicio</string>
-    <string name="title_home">Inicio</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="title_activity_actividad_mapa">Mapa</string>
     <string name="icono_estrella_descripcion">Marcar como favorito</string>
+    <string name="boton_mostrar_en_mapa">Mostrar ruta en mapa</string>
     <string name="rutas_descripcion">Listado de Rutas</string>
-    <string name="rutas_descripcion_favoritos">Rutas Favoritas</string>
+    <string name="rutas_descripcion_favoritos">Marcar Favorito</string>
+    <string name="rutas_descripcion_mapa">Ir al Mapa</string>
     <string name="mapa_descricion">Mapa</string>
     <string name="imagen_ruta_descripcion">Imagen sobre la ruta</string>
-    <string name="pruebas">RelativeLayout actividad rutas</string>
+    <string name="conenedor_rutas_descripcion">Lista de Rutas</string>
     <string name="titulo_inicio">Rutas</string>
     <string name="rutas_titulo">Rutas</string>
     <string name="title_activity_actividad_log_in">Iniciar Sesión</string>
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Iniciar sesión</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
     <string name="error_invalid_email">Este email es inválido</string>
     <string name="error_invalid_password">Contraseña muy corta</string>
     <string name="error_incorrect_password">Contraseña incorrecta</string>
     <string name="error_field_required">Este campo es obligatorio</string>
     <string name="permission_rationale">"Se necesita permisos de contacto para autocompletar email."
     </string>
-    <string name="texto_notificaciones">ASD</string>
-    <string name="title_activity_drawer">DRAWER</string>
     <string name="navigation_drawer_open">Abrir menu hamburguesa</string>
     <string name="navigation_drawer_close">Cerrar menu hamburguesa</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
     <string name="titulo_detallado">Ruta Detallada</string>
     <string name="formulario_registro_descripcion">Formulario de registro o inicio de sesión</string>
     <string name="action_sign_in_google">Iniciar sesión Google</string>
@@ -43,9 +35,18 @@
     <string name="delete_button">Borrar cuenta</string>
     <string name="sesion_cerrada">Sesión Cerrada</string>
     <string name="cuenta_borrada">Cuenta Borrada</string>
-    <string name="hastag_code">#GranaRoutesApp</string>
     <string name="compartir_app">Comparte</string>
     <string name="perfil">Perfil</string>
     <string name="mostrar_ruta_mapa">Mostrar ruta en el mapa</string>
     <string name="descripcion_cartel_no_rutas">No hay rutas, asegurese de haber hecho favorita una</string>
+    <string name="ruta_detallada_lugares_titulo">Lugares:</string>
+    <string name="ruta_detallada_grupo_titulo">Grupos:</string>
+
+
+
+    <string name="title_activity_drawer" translatable="false">DRAWER</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="app_name" translatable="false">GranaRoutes</string>
+    <string name="hastag_code" translatable="false">#GranaRoutesApp</string>
 </resources>
