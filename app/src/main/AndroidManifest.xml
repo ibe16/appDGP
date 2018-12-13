@@ -56,7 +56,7 @@
         </activity>
 
         <activity
-            android:name=".actividades.PreferenciasUsuario"
+            android:name=".actividades.PerfilUsuario"
             android:theme="@style/AppTheme"
             android:label="@string/nav_preferencias_usuario">
         </activity>

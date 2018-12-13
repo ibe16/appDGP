@@ -1,6 +1,5 @@
 package dgp.ugr.granaroutes.actividades;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import dgp.ugr.granaroutes.R;
 
-public class PreferenciasUsuario extends AppCompatActivity {
+public class PerfilUsuario extends AppCompatActivity {
 
     Button logOut;
     Button deleteAccount;
@@ -33,7 +32,7 @@ public class PreferenciasUsuario extends AppCompatActivity {
                 auth = FirebaseAuth.getInstance();
                 auth.signOut();
                 Toast.makeText(getApplicationContext(),R.string.sesion_cerrada,Toast.LENGTH_SHORT).show();
-                aniadirResultadoActividadPrincipal();
+                activarVolverAInicioSesion();
             }
         });
 
@@ -47,8 +46,8 @@ public class PreferenciasUsuario extends AppCompatActivity {
                     auth.getCurrentUser().delete();
                     Toast.makeText(getApplicationContext(),R.string.cuenta_borrada,Toast.LENGTH_SHORT).show();
                 }
-
-                aniadirResultadoActividadPrincipal();
+                auth.signOut();
+                activarVolverAInicioSesion();
 
             }
         });
@@ -61,7 +60,7 @@ public class PreferenciasUsuario extends AppCompatActivity {
         finish();
     }
 
-    private void aniadirResultadoActividadPrincipal(){
+    private void activarVolverAInicioSesion(){
 
         Intent data = new Intent();
         String text = "Inicio_Sesion";

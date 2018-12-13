@@ -15,10 +15,10 @@ import android.widget.ProgressBar;
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 import dgp.ugr.granaroutes.adaptador.Adaptador;
-import dgp.ugr.granaroutes.data.ContentProvider;
-import dgp.ugr.granaroutes.data.DataListener;
+import dgp.ugr.granaroutes.data.ProveedorContenidos;
+import dgp.ugr.granaroutes.data.RegistradorDatos;
 
-public class FragmentoRutas extends Fragment implements DataListener{
+public class FragmentoRutas extends Fragment implements RegistradorDatos {
 
     protected RecyclerView recyclerView;
     private ProgressBar cargando;
@@ -28,18 +28,16 @@ public class FragmentoRutas extends Fragment implements DataListener{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.layout_actividad_rutas, null);
+        View view = inflater.inflate(R.layout.layout_actividad_rutas,null);
         recyclerView = view.findViewById(R.id.rv_rutas);
         cargando = view.findViewById(R.id.pb_loading_indicator);
 
-
-
-        if(ContentProvider.getInstance().getRutas() == null || ContentProvider.getInstance().getRutas().isEmpty()) {
+        if(rutasVacias()) {
             mostrarNoHayDatos();
-            ContentProvider.getInstance().leerRutas(this);
+            ProveedorContenidos.getInstance().obtenerRutas(this);
         }
         else{
-            lecturaTerminada();
+            terminarInicializacion();
         }
 
         return view;
@@ -57,10 +55,10 @@ public class FragmentoRutas extends Fragment implements DataListener{
 
 
     @Override
-    public void lecturaTerminada() {
+    public void terminarInicializacion() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adaptador = new Adaptador(getContext(), ContentProvider.getInstance().getRutas(), (ActividadPrincipal) getActivity());
+        adaptador = new Adaptador(getContext(), ProveedorContenidos.getInstance().getRutas(), (ActividadPrincipal) getActivity());
         recyclerView.setAdapter(adaptador);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 recyclerView.getContext(), LinearLayoutManager.VERTICAL);
@@ -70,12 +68,13 @@ public class FragmentoRutas extends Fragment implements DataListener{
         mostrarDatos();
     }
 
-    @Override
-    public void reorganizarDatos() {
-
-    }
 
     public Adaptador getAdaptador() {
         return adaptador;
+    }
+
+    protected boolean rutasVacias(){
+        return ProveedorContenidos.getInstance().getRutas() == null
+                || ProveedorContenidos.getInstance().getRutas().isEmpty();
     }
 }

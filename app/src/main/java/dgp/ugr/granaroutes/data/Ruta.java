@@ -4,8 +4,6 @@ package dgp.ugr.granaroutes.data;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -24,20 +22,9 @@ public class Ruta {
         numero = contador.incrementAndGet();
         favorito = false;
     }
-/*
-    public Ruta(String nombre, String descripcion, String map, Map<String, Boolean> grupos, Map<String, Boolean> lugares) {
-        numero = contador.incrementAndGet();
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.map = map;
-        this.grupos = grupos;
-        this.lugares = lugares;
-        favorito = false;
-    }*/
 
 
-
-    public int getNumero() {
+    int getNumero() {
         return numero;
     }
 
@@ -47,10 +34,6 @@ public class Ruta {
 
     public String getDescripcion() {
         return descripcion;
-    }
-
-    public String getMap() {
-        return map;
     }
 
     public Uri getMapUri() {
@@ -89,13 +72,15 @@ public class Ruta {
         this.lugares = lugares;
     }
 
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
     public Uri getImagen() {
         return Uri.parse(imagen);
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
+
 
     @NonNull
     @Override

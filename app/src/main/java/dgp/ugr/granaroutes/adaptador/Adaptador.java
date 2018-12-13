@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.data.ContentProvider;
+import dgp.ugr.granaroutes.data.ProveedorContenidos;
 import dgp.ugr.granaroutes.data.Ruta;
 
 
@@ -29,7 +29,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
     public interface AdapterOnClickHandler{
         void onClick(Ruta ruta, int posicion);
         void reorganizarDatos();
-        void muestraNoDatos();
+        void muestraNoHayDatos();
     }
 
 
@@ -43,7 +43,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
     @Override
     public Adaptador.RutaViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.layout_item_lista, null);
+        View view = inflater.inflate(R.layout.layout_item_lista, viewGroup,false);
         return new RutaViewHolder(view);
     }
 
@@ -59,16 +59,16 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
             public void onClick(View view) {
                 rutas.get(posicion).clickFavorito();
                 if(rutas.get(posicion).isFavorito()){
-                    ContentProvider.getInstance().aniadeRutaFavorita(posicion);
+                    ProveedorContenidos.getInstance().aniadeRutaFavorita(posicion);
                 }
                 else{
-                    ContentProvider.getInstance().quitaRutaFavorita(rutas.get(posicion));
+                    ProveedorContenidos.getInstance().quitaRutaFavorita(rutas.get(posicion));
                     notifyDataSetChanged();
                 }
                 if(getItemCount() > 0)
                     pintarEstrella(rutaViewHolder, posicion);
                 else
-                    clickHandler.muestraNoDatos();
+                    clickHandler.muestraNoHayDatos();
 
 
             }

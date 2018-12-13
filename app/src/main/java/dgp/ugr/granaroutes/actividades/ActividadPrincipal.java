@@ -3,22 +3,18 @@ package dgp.ugr.granaroutes.actividades;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -30,7 +26,7 @@ import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.adaptador.Adaptador;
-import dgp.ugr.granaroutes.data.ContentProvider;
+import dgp.ugr.granaroutes.data.ProveedorContenidos;
 import dgp.ugr.granaroutes.data.Ruta;
 import dgp.ugr.granaroutes.fragmentos.FragmentoMapa;
 import dgp.ugr.granaroutes.fragmentos.FragmentoRutas;
@@ -61,24 +57,18 @@ public class ActividadPrincipal extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.panel_lateral);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        TextView titulo = headerView.findViewById(R.id.titulo_hamburgesa);
-        TextView descripcion = headerView.findViewById(R.id.descripcion_hamburgesa);
+        inicializaValoresMenuHamburguesa();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(user != null) {
-            titulo.setText(user.getEmail());
-            descripcion.setText(user.getDisplayName());
-        }
+        inicializaMenuInferior();
 
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(this);
         fragment = new FragmentoRutas();
         cargarFragmento(fragment);
+    }
+
+    private void inicializaMenuInferior() {
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
     }
 
 
@@ -91,33 +81,33 @@ public class ActividadPrincipal extends AppCompatActivity
      */
     private boolean cargarFragmento (Fragment fragmento){
 
-        boolean valor = false;
+        boolean devuelve = false;
         if(fragmento != null){
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.contenedor_fragmento, fragmento)
                     .commit();
-            valor = true;
+            devuelve = true;
         }
-        return valor;
+        return devuelve;
     }
 
     /**
      * Metodo para mostrar la actividad de una ruta detallada
      * @param ruta Ruta que se ha pinchado para ser visualizada con mas detalles
-     * @param posicion Posición de la ruta en la colección de elementos
+     * @param posicion Posicion de la ruta en la colección de elementos
      */
     private void irDetallado(Ruta ruta, int posicion){
         Intent intent = new Intent(this, ActividadRutaDetallada.class);
         intent.putExtra("nombre",ruta.getNombre());
         intent.putExtra("descripcion",ruta.getDescripcion());
         String[] grupo = new String[ruta.getGrupos().size()];
-        ArrayList<String> lista = new ArrayList<String>(ruta.getGrupos().keySet());
+        ArrayList<String> lista = new ArrayList<>(ruta.getGrupos().keySet());
         for(int i = 0; i < lista.size(); i++)
             grupo[i] = lista.get(i);
         intent.putExtra("grupo", grupo);
         String[] lugares = new String[ruta.getLugares().size()];
-        lista = new ArrayList<String>(ruta.getLugares().keySet());
+        lista = new ArrayList<>(ruta.getLugares().keySet());
         for(int i = 0; i < lista.size(); i++)
             lugares[i] = lista.get(i);
         intent.putExtra("lugares", lugares);
@@ -149,7 +139,7 @@ public class ActividadPrincipal extends AppCompatActivity
                 break;
             case R.id.nav_rutas_fav:
             case R.id.navigation_rutas_favoritas:
-                ContentProvider.getInstance().ordenaPorNumero();
+                ProveedorContenidos.getInstance().ordenaFavoritasPorNumero();
                 fragment = new FragmentoRutasFavoritas();
                 cargarFragmento = true;
                 break;
@@ -196,7 +186,7 @@ public class ActividadPrincipal extends AppCompatActivity
     }
 
     private void irPreferenciasUsuario() {
-        Intent intent = new Intent(this,PreferenciasUsuario.class);
+        Intent intent = new Intent(this,PerfilUsuario.class);
         startActivityForResult(intent,1);
     }
 
@@ -210,33 +200,6 @@ public class ActividadPrincipal extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.drawer, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -264,7 +227,7 @@ public class ActividadPrincipal extends AppCompatActivity
     }
 
     @Override
-    public void muestraNoDatos() {
+    public void muestraNoHayDatos() {
         FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
         fragmentoRutas.mostrarNoHayDatos();
     }
@@ -273,6 +236,23 @@ public class ActividadPrincipal extends AppCompatActivity
         Intent intent = new Intent(this, ActividadLogIn.class);
         startActivity(intent);
         finish();
+    }
+
+    private void inicializaValoresMenuHamburguesa(){
+        NavigationView navigationView = findViewById(R.id.panel_lateral);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView titulo = headerView.findViewById(R.id.titulo_hamburgesa);
+        TextView descripcion = headerView.findViewById(R.id.descripcion_hamburgesa);
+
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(usuario != null) {
+            titulo.setText(usuario.getEmail());
+            descripcion.setText(usuario.getDisplayName());
+        }
     }
 
 }

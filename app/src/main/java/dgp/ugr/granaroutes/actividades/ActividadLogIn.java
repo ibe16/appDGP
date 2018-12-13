@@ -26,7 +26,7 @@ import com.google.android.gms.auth.api.Auth;
 import dgp.ugr.granaroutes.R;
 
 public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    EditText loginEmail,loginPassword;
+    EditText loginEmail, loginContrasenia;
     Button loginButtonEmail;
     Button loginButtonGoogle;
     Button registroButtonEmail;
@@ -40,22 +40,12 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
         setContentView(R.layout.layout_actividad_log_in);
 
         loginEmail =  findViewById(R.id.email_login);
-        loginPassword = findViewById(R.id.contraseña_login);
+        loginContrasenia = findViewById(R.id.contraseña_login);
         loginButtonEmail = findViewById(R.id.boton_iniciar_sesion_email);
         registroButtonEmail = findViewById(R.id.boton_registro_email);
         loginButtonGoogle = findViewById(R.id.boton_iniciar_sesion_gmail);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(ActividadLogIn.this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-                .build();
+        inicializaServiciosGoogle();
 
         loginButtonEmail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +61,6 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
             }
         });
 
-
         loginButtonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,15 +68,16 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
             }
         });
 
-        if(firebaseAuth.getCurrentUser()!=null){
-            Toast.makeText(getApplicationContext(),"Autenticado con "+ firebaseAuth.getCurrentUser().getDisplayName(),Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getApplicationContext(),ActividadPrincipal.class));
+        if(estaAutenticado()){
+            irActividadPrincipal();
         }
+
+
 
     }
 
     private void registrarCorreo(){
-        firebaseAuth.createUserWithEmailAndPassword(loginEmail.getText().toString(),loginPassword.getText().toString())
+        firebaseAuth.createUserWithEmailAndPassword(loginEmail.getText().toString(), loginContrasenia.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -105,7 +95,7 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
     }
 
     private void signInCorreo(){
-        firebaseAuth.signInWithEmailAndPassword(loginEmail.getText().toString(),loginPassword.getText().toString())
+        firebaseAuth.signInWithEmailAndPassword(loginEmail.getText().toString(), loginContrasenia.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -132,7 +122,8 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()){
                 GoogleSignInAccount account = result.getSignInAccount();
-                authWithGoogle(account);
+                if(account != null)
+                    authWithGoogle(account);
             }
             else{
                 Toast.makeText(getApplicationContext(),"Error de autentificación",Toast.LENGTH_SHORT).show();
@@ -166,5 +157,23 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
 
     }
 
+
+    private void inicializaServiciosGoogle(){
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(ActividadLogIn.this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .build();
+    }
+
+    private boolean estaAutenticado(){
+        return firebaseAuth.getCurrentUser()!=null;
+    }
 }
 

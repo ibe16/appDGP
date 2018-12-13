@@ -9,8 +9,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,33 +18,31 @@ import java.util.Comparator;
 import static android.support.constraint.Constraints.TAG;
 
 
-public class ContentProvider implements Serializable {
+public class ProveedorContenidos implements Serializable {
 
-    private static ArrayList<Ruta> rutas;
-    private static ArrayList<Ruta> rutasFavoritas;
-    private static volatile ContentProvider instanciado;
+    private static volatile ArrayList<Ruta> rutas;
+    private static volatile ArrayList<Ruta> rutasFavoritas;
+    private static volatile ProveedorContenidos instanciado;
 
-    //private constructor.
-    private ContentProvider(){
+    private ProveedorContenidos(){
 
-        //Prevent form the reflection api.
         if (instanciado != null){
-            throw new RuntimeException("Utilizar .getInstance() para convocar ContentProvider");
+            throw new RuntimeException("Utilizar .getInstance() para invocar ProveedorContenidos");
         }
     }
 
-    public static ContentProvider getInstance() {
+    public static ProveedorContenidos getInstance() {
         if (instanciado == null) {
-            synchronized (ContentProvider.class) {
-                if (instanciado == null) instanciado = new ContentProvider();
+            synchronized (ProveedorContenidos.class) {
+                if (instanciado == null) instanciado = new ProveedorContenidos();
             }
         }
 
         return instanciado;
     }
 
-    //Make singleton from serialize and deserialize operation.
-    protected ContentProvider readResolve() {
+    //Método para hacer que el singleton no sirva con serializaciones y deserializaciones.
+    protected ProveedorContenidos readResolve() {
         return getInstance();
     }
 
@@ -55,30 +51,28 @@ public class ContentProvider implements Serializable {
         return rutas;
     }
 
-    public void leerRutas(final DataListener escuchador) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference rutasDb = mDatabase.child("rutas");
+    public void obtenerRutas(final RegistradorDatos escuchador) {
+        DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference rutasBd = baseDatos.child("rutas");
 
-        rutasDb.addValueEventListener(new ValueEventListener() {
+        rutasBd.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 rutas = new ArrayList<>();
                 rutasFavoritas = new ArrayList<>();
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    //Firebase añade directamente del JSON los valores a la clase que se especifique
-                    Ruta rutita = d.getValue(Ruta.class);
+                for (DataSnapshot unidad : dataSnapshot.getChildren()) {
+                    Ruta rutita = unidad.getValue(Ruta.class);
                     rutas.add(rutita);
                 }
 
-                escuchador.lecturaTerminada();
+                escuchador.terminarInicializacion();
 
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Error al obtener Rutas", error.toException());
             }
 
 
@@ -97,7 +91,7 @@ public class ContentProvider implements Serializable {
         rutasFavoritas.add(rutas.get(posicion));
     }
 
-    public void ordenaPorNumero(){
+    public void ordenaFavoritasPorNumero(){
         Collections.sort(rutasFavoritas, new Comparator<Ruta>(){
             public int compare(Ruta r1, Ruta r2){
                 return r1.getNumero() - r2.getNumero();
