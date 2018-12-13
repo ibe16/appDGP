@@ -27,7 +27,7 @@ public class FragmentoMapa extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         cargaMapa();
-        return inflater.inflate(R.layout.layout_actividad_mapa, null);
+        return inflater.inflate(R.layout.layout_actividad_mapa, container, false);
 
     }
 

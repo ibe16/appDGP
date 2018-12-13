@@ -28,7 +28,7 @@ public class FragmentoRutas extends Fragment implements RegistradorDatos {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.layout_actividad_rutas,null);
+        View view = inflater.inflate(R.layout.layout_actividad_rutas,container, false);
         recyclerView = view.findViewById(R.id.rv_rutas);
         cargando = view.findViewById(R.id.pb_loading_indicator);
 

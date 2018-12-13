@@ -26,7 +26,7 @@ public class FragmentoRutasFavoritas extends FragmentoRutas{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_actividad_rutas_favoritas, null);
+        View view = inflater.inflate(R.layout.layout_actividad_rutas_favoritas, container, false);
         recyclerView = view.findViewById(R.id.rv_rutas_favoritas);
         cartelNoRutasFavoritas = view.findViewById(R.id.no_rutas);
 
