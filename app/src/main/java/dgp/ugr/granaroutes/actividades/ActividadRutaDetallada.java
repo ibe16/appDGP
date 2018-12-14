@@ -6,18 +6,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import dgp.ugr.granaroutes.R;
+import dgp.ugr.granaroutes.adaptador.AdaptadorRutas;
+import dgp.ugr.granaroutes.adaptador.AdaptadorValoraciones;
 import dgp.ugr.granaroutes.data.ProveedorContenidos;
+import dgp.ugr.granaroutes.data.RegistradorDatos;
+import dgp.ugr.granaroutes.data.Valoracion;
 
-public class ActividadRutaDetallada extends AppCompatActivity {
+public class ActividadRutaDetallada extends AppCompatActivity implements RegistradorDatos,
+        AdaptadorValoraciones.AdministradorClickValoraciones {
 
 
     private int numero;
@@ -28,6 +38,9 @@ public class ActividadRutaDetallada extends AppCompatActivity {
     private TextView lugares;
     private ImageView ruta;
     private Menu menu;
+    private CardView valoracionPropia;
+    private RecyclerView listaValoraciones;
+    private AdaptadorValoraciones adaptadorValoraciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +56,22 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         grupos = findViewById(R.id.grupos_ruta);
         lugares = findViewById(R.id.lugares_ruta);
         ruta = findViewById(R.id.imagen_ruta);
-
+        valoracionPropia = findViewById(R.id.contenedor_tu_valoracion);
+        listaValoraciones = findViewById(R.id.rv_valoraciones);
 
 
         inicializarVariables();
 
         insertarImagen();
+
+        if(valoracionesVacias()) {
+            muestraNoHayDatos();
+            ProveedorContenidos.getInstance().obtenerValoracionesDeRuta
+                    (getIntent().getStringExtra("nombre"),this);
+        }
+        else{
+            terminarInicializacion();
+        }
 
     }
 
@@ -118,7 +141,6 @@ public class ActividadRutaDetallada extends AppCompatActivity {
             lugaresTexto.append("\n");
         }
         lugares.setText(lugaresTexto.toString());
-        ProveedorContenidos.getInstance().obtenerValoracionesDeRuta(intent.getStringExtra("nombre"));
     }
 
     private void indicarCambiosActividadAnterior(){
@@ -167,5 +189,48 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         }
 
         return false;
+    }
+
+
+
+
+    public void mostrarDatos() {
+        listaValoraciones.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void terminarInicializacion() {
+        listaValoraciones.setHasFixedSize(true);
+        listaValoraciones.setLayoutManager(new LinearLayoutManager(this));
+        adaptadorValoraciones = new AdaptadorValoraciones(this,ProveedorContenidos.getInstance().getValoraciones(),
+                this);
+        listaValoraciones.setAdapter(adaptadorValoraciones);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                listaValoraciones.getContext(), LinearLayoutManager.VERTICAL);
+
+        listaValoraciones.addItemDecoration(dividerItemDecoration);
+
+        mostrarDatos();
+    }
+
+
+    public AdaptadorValoraciones getAdaptadorValoraciones() {
+        return adaptadorValoraciones;
+    }
+
+    protected boolean valoracionesVacias(){
+        return ProveedorContenidos.getInstance().getValoraciones() == null
+                || ProveedorContenidos.getInstance().getValoraciones().isEmpty();
+    }
+
+    @Override
+    public void onClick(Valoracion Valoracion) {
+
+    }
+
+    @Override
+    public void muestraNoHayDatos() {
+
     }
 }

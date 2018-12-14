@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
-import dgp.ugr.granaroutes.adaptador.Adaptador;
+import dgp.ugr.granaroutes.adaptador.AdaptadorRutas;
 import dgp.ugr.granaroutes.data.ProveedorContenidos;
 import dgp.ugr.granaroutes.data.RegistradorDatos;
 
@@ -22,7 +22,7 @@ public class FragmentoRutas extends Fragment implements RegistradorDatos {
 
     protected RecyclerView recyclerView;
     private ProgressBar cargando;
-    protected Adaptador adaptador;
+    protected AdaptadorRutas adaptadorRutas;
 
     @Nullable
     @Override
@@ -58,8 +58,8 @@ public class FragmentoRutas extends Fragment implements RegistradorDatos {
     public void terminarInicializacion() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adaptador = new Adaptador(getContext(), ProveedorContenidos.getInstance().getRutas(), (ActividadPrincipal) getActivity());
-        recyclerView.setAdapter(adaptador);
+        adaptadorRutas = new AdaptadorRutas(getContext(), ProveedorContenidos.getInstance().getRutas(), (ActividadPrincipal) getActivity());
+        recyclerView.setAdapter(adaptadorRutas);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 
@@ -69,8 +69,8 @@ public class FragmentoRutas extends Fragment implements RegistradorDatos {
     }
 
 
-    public Adaptador getAdaptador() {
-        return adaptador;
+    public AdaptadorRutas getAdaptadorRutas() {
+        return adaptadorRutas;
     }
 
     protected boolean rutasVacias(){

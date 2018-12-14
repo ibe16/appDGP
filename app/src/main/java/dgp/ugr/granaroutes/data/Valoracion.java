@@ -43,4 +43,8 @@ public class Valoracion {
     void setIdentificador(int i) {
         identificador = i;
     }
+
+    public void setUsuario(String cambiado) {
+        usuario = cambiado;
+    }
 }

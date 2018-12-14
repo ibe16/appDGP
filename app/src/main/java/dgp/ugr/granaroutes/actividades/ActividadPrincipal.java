@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.adaptador.Adaptador;
+import dgp.ugr.granaroutes.adaptador.AdaptadorRutas;
 import dgp.ugr.granaroutes.data.ProveedorContenidos;
 import dgp.ugr.granaroutes.data.Ruta;
 import dgp.ugr.granaroutes.fragmentos.FragmentoMapa;
@@ -40,7 +40,7 @@ import dgp.ugr.granaroutes.fragmentos.FragmentoRutasFavoritas;
 public class ActividadPrincipal extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavigationView.OnNavigationItemSelectedListener,
-        Adaptador.AdapterOnClickHandler{
+        AdaptadorRutas.AdapterOnClickHandler{
 
     private Fragment fragment;
 
@@ -222,7 +222,7 @@ public class ActividadPrincipal extends AppCompatActivity
     @Override
     public void reorganizarDatos() {
         FragmentoRutas fragmentoRutas = (FragmentoRutas) fragment;
-        fragmentoRutas.getAdaptador().notifyDataSetChanged();
+        fragmentoRutas.getAdaptadorRutas().notifyDataSetChanged();
     }
 
     @Override

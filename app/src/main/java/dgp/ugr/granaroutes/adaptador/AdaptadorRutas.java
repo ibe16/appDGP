@@ -20,7 +20,7 @@ import dgp.ugr.granaroutes.data.Ruta;
 /**
  * Clase interna para manejar un sólo objeto en el recyclerView
  */
-public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
+public class AdaptadorRutas extends RecyclerView.Adapter<AdaptadorRutas.RutaViewHolder> {
     private Context context;
     private ArrayList<Ruta> rutas;
     private AdapterOnClickHandler clickHandler;
@@ -34,7 +34,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
     }
 
 
-    public Adaptador(Context context, ArrayList<Ruta> rutasRemotas, AdapterOnClickHandler handler) {
+    public AdaptadorRutas(Context context, ArrayList<Ruta> rutasRemotas, AdapterOnClickHandler handler) {
         this.context = context;
         rutas = rutasRemotas;
         clickHandler = handler;
@@ -42,14 +42,14 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
 
     @NonNull
     @Override
-    public Adaptador.RutaViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public AdaptadorRutas.RutaViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.layout_item_lista, viewGroup,false);
         return new RutaViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final @NonNull Adaptador.RutaViewHolder rutaViewHolder,int position) {
+    public void onBindViewHolder(final @NonNull AdaptadorRutas.RutaViewHolder rutaViewHolder, int position) {
         final Ruta ruta = rutas.get(position);
         rutaViewHolder.titulo.setText(ruta.getNombre());
         rutaViewHolder.descripcion.setText(ruta.getDescripcion().trim());
@@ -78,7 +78,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RutaViewHolder> {
         pintarEstrella(rutaViewHolder, posicion);
     }
 
-    private void pintarEstrella(Adaptador.RutaViewHolder rutaViewHolder, int posicion){
+    private void pintarEstrella(AdaptadorRutas.RutaViewHolder rutaViewHolder, int posicion){
         if(rutas.get(posicion).isFavorito()){
             rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_black));
             rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_selected));

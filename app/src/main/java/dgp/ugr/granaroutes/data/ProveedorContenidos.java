@@ -2,6 +2,7 @@ package dgp.ugr.granaroutes.data;
 
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -14,6 +15,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static android.support.constraint.Constraints.TAG;
@@ -48,6 +51,10 @@ public class ProveedorContenidos implements Serializable {
         return rutas;
     }
 
+    public ArrayList<Valoracion> getValoraciones() {
+        return valoraciones;
+    }
+
     public void obtenerRutas(final RegistradorDatos escuchador) {
         DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference();
         DatabaseReference rutasBd = baseDatos.child("rutas");
@@ -76,7 +83,7 @@ public class ProveedorContenidos implements Serializable {
         });
     }
 
-    public void obtenerValoracionesDeRuta(final String nombreRuta){
+    public void obtenerValoracionesDeRuta(final String nombreRuta, final RegistradorDatos escuchador){
         DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference valoracionesBd = baseDatos.child("valoraciones");
 
@@ -90,10 +97,7 @@ public class ProveedorContenidos implements Serializable {
                         extraeValoraciones(unidad);
                     }
                 }
-
-                for(Valoracion v:valoraciones){
-                    Log.d("VALORACION: ", v.toString());
-                }
+                escuchador.terminarInicializacion();
             }
 
             @Override
@@ -143,41 +147,18 @@ public class ProveedorContenidos implements Serializable {
 
     }
 
-    //TODO METER VALORACIONES Y CAMBIAR CONSTRAINTS
-    /**
-     * public static class User {
-     *
-     *   public String date_of_birth;
-     *   public String full_name;
-     *   public String nickname;
-     *
-     *   public User(String dateOfBirth, String fullName) {
-     *     // ...
-     *   }
-     *
-     *   public User(String dateOfBirth, String fullName, String nickname) {
-     *     // ...
-     *   }
-     *
-     * }
-     *
-     * DatabaseReference usersRef = ref.child("users");
-     *
-     * Map<String, User> users = new HashMap<>();
-     * users.put("alanisawesome", new User("June 23, 1912", "Alan Turing"));
-     * users.put("gracehop", new User("December 9, 1906", "Grace Hopper"));
-     *
-     * usersRef.setValueAsync(users);
-     *
-     *
-     *
-     *
-     *
-     * CAMBIO CONSTRAINT
-     *
-     * https://stackoverflow.com/questions/45263159/constraintlayout-change-constraints-programmatically
-     *
-     *
-     */
+    public void subirDatos(String nombreRuta){
+        DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference valoracionesBd = baseDatos.child("valoraciones/" + nombreRuta);
+
+        Map<String, Valoracion> subirValoraciones = new HashMap<>();
+
+
+        for(Valoracion valoracion:valoraciones)
+            subirValoraciones.put(Integer.toString(valoracion.getIdentificador()),valoracion);
+
+        valoracionesBd.setValue(subirValoraciones);
+    }
+
 }
 
