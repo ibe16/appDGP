@@ -49,4 +49,5 @@
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="app_name" translatable="false">GranaRoutes</string>
     <string name="hastag_code" translatable="false">#GranaRoutesApp</string>
+    <string name="titulo_valoraciones">Valoraciones:</string>
 </resources>

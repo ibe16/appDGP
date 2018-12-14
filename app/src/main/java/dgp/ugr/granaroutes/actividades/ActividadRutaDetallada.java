@@ -35,6 +35,7 @@ public class ActividadRutaDetallada extends AppCompatActivity {
         setContentView(R.layout.layout_actividad_ruta_detallada);
 
 
+
         aniadirFlechaVolverAnteriorActividad();
 
         titulo = findViewById(R.id.titulo_ruta);
@@ -117,6 +118,7 @@ public class ActividadRutaDetallada extends AppCompatActivity {
             lugaresTexto.append("\n");
         }
         lugares.setText(lugaresTexto.toString());
+        ProveedorContenidos.getInstance().obtenerValoracionesDeRuta(intent.getStringExtra("nombre"));
     }
 
     private void indicarCambiosActividadAnterior(){

@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -21,6 +22,7 @@ import static android.support.constraint.Constraints.TAG;
 public class ProveedorContenidos implements Serializable {
 
     private static volatile ArrayList<Ruta> rutas;
+    private static volatile ArrayList<Valoracion> valoraciones;
     private static volatile ArrayList<Ruta> rutasFavoritas;
     private static volatile ProveedorContenidos instanciado;
 
@@ -74,7 +76,48 @@ public class ProveedorContenidos implements Serializable {
         });
     }
 
+    public void obtenerValoracionesDeRuta(final String nombreRuta){
+        DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference valoracionesBd = baseDatos.child("valoraciones");
 
+        valoracionesBd.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                valoraciones = new ArrayList<>();
+                for (DataSnapshot unidad : dataSnapshot.getChildren()) {
+                    if(esLaRuta(unidad.getKey(), nombreRuta)){
+                        extraeValoraciones(unidad);
+                    }
+                }
+
+                for(Valoracion v:valoraciones){
+                    Log.d("VALORACION: ", v.toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Error al obtener Valoraciones", error.toException());
+            }
+
+
+        });
+    }
+
+    private void extraeValoraciones(DataSnapshot unidad) {
+        for (DataSnapshot valoracion : unidad.getChildren()) {
+            Valoracion v = valoracion.getValue(Valoracion.class);
+            if(valoracion.getKey() != null && v != null) {
+                v.setIdentificador(Integer.parseInt(valoracion.getKey()));
+                valoraciones.add(v);
+            }
+        }
+    }
+
+    private boolean esLaRuta(String posibleNombre, String elNombre) {
+        return Objects.equals(posibleNombre, elNombre);
+    }
 
 
     public ArrayList<Ruta> getRutasFavoritas() {
@@ -99,5 +142,42 @@ public class ProveedorContenidos implements Serializable {
             rutasFavoritas.remove(ruta);
 
     }
+
+    //TODO METER VALORACIONES Y CAMBIAR CONSTRAINTS
+    /**
+     * public static class User {
+     *
+     *   public String date_of_birth;
+     *   public String full_name;
+     *   public String nickname;
+     *
+     *   public User(String dateOfBirth, String fullName) {
+     *     // ...
+     *   }
+     *
+     *   public User(String dateOfBirth, String fullName, String nickname) {
+     *     // ...
+     *   }
+     *
+     * }
+     *
+     * DatabaseReference usersRef = ref.child("users");
+     *
+     * Map<String, User> users = new HashMap<>();
+     * users.put("alanisawesome", new User("June 23, 1912", "Alan Turing"));
+     * users.put("gracehop", new User("December 9, 1906", "Grace Hopper"));
+     *
+     * usersRef.setValueAsync(users);
+     *
+     *
+     *
+     *
+     *
+     * CAMBIO CONSTRAINT
+     *
+     * https://stackoverflow.com/questions/45263159/constraintlayout-change-constraints-programmatically
+     *
+     *
+     */
 }
 
