@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.data.Valoracion;
 
 
-//TODO TERMINAR VISTA DE VALORACIONES
 
 public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValoraciones.ValoracionViewHolder> {
     private Context context;
@@ -24,7 +24,6 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
 
     public interface AdministradorClickValoraciones {
         void onClick(Valoracion Valoracion);
-
         void muestraNoHayDatos();
     }
 
@@ -40,13 +39,17 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
     @Override
     public AdaptadorValoraciones.ValoracionViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.layout_item_lista, viewGroup, false);
+        View view = inflater.inflate(R.layout.layout_valoracion_item, viewGroup, false);
         return new ValoracionViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final @NonNull AdaptadorValoraciones.ValoracionViewHolder ValoracionViewHolder, int position) {
-
+        final Valoracion valoracion = valoraciones.get(position);
+        ValoracionViewHolder.usuario.setText(valoracion.getUsuario());
+        ValoracionViewHolder.descripcion.setText(valoracion.getDescripcion());
+        String cambiaComasPorPuntos = valoracion.getValoracion().replaceAll(",",".");
+        ValoracionViewHolder.puntuacion.setRating(Float.parseFloat(cambiaComasPorPuntos));
 
     }
 
@@ -57,15 +60,17 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
     }
 
     class ValoracionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView titulo;
+        TextView usuario;
         TextView descripcion;
+        RatingBar puntuacion;
 
 
         ValoracionViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            titulo = itemView.findViewById(R.id.descripcion_elemento);
-            descripcion = itemView.findViewById(R.id.subdescripcion_elemento);
+            usuario = itemView.findViewById(R.id.usuario_valoracion);
+            descripcion = itemView.findViewById(R.id.descripcion_valoracion);
+            puntuacion = itemView.findViewById(R.id.valoracion_numerica);
             itemView.setOnClickListener(this);
         }
 

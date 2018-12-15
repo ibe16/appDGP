@@ -16,11 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.adaptador.AdaptadorRutas;
 import dgp.ugr.granaroutes.adaptador.AdaptadorValoraciones;
 import dgp.ugr.granaroutes.data.ProveedorContenidos;
 import dgp.ugr.granaroutes.data.RegistradorDatos;
@@ -40,7 +40,6 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     private Menu menu;
     private CardView valoracionPropia;
     private RecyclerView listaValoraciones;
-    private AdaptadorValoraciones adaptadorValoraciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
 
         insertarImagen();
 
-        if(valoracionesVacias()) {
+        if(valoracionesVacias() || !sonValoracionesDeEstaRuta()) {
             muestraNoHayDatos();
             ProveedorContenidos.getInstance().obtenerValoracionesDeRuta
                     (getIntent().getStringExtra("nombre"),this);
@@ -73,6 +72,11 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
             terminarInicializacion();
         }
 
+    }
+
+    private boolean sonValoracionesDeEstaRuta() {
+        return ProveedorContenidos.getInstance().getNombreRutaValoracion().equals
+                (getIntent().getStringExtra("nombre"));
     }
 
     private void compruebaFavorito(){
@@ -203,7 +207,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     public void terminarInicializacion() {
         listaValoraciones.setHasFixedSize(true);
         listaValoraciones.setLayoutManager(new LinearLayoutManager(this));
-        adaptadorValoraciones = new AdaptadorValoraciones(this,ProveedorContenidos.getInstance().getValoraciones(),
+        AdaptadorValoraciones adaptadorValoraciones = new AdaptadorValoraciones(this, ProveedorContenidos.getInstance().getValoraciones(),
                 this);
         listaValoraciones.setAdapter(adaptadorValoraciones);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
@@ -215,10 +219,6 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     }
 
 
-    public AdaptadorValoraciones getAdaptadorValoraciones() {
-        return adaptadorValoraciones;
-    }
-
     protected boolean valoracionesVacias(){
         return ProveedorContenidos.getInstance().getValoraciones() == null
                 || ProveedorContenidos.getInstance().getValoraciones().isEmpty();
@@ -226,11 +226,15 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
 
     @Override
     public void onClick(Valoracion Valoracion) {
-
+        //TODO HACER
+        Toast.makeText(this,"IR A VALORACION DETALLADA",Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void muestraNoHayDatos() {
-
+        //TODO HACER
+        Toast.makeText(this,"CARTEL DE NO HAY DATOS",Toast.LENGTH_LONG).show();
     }
+
+    //TODO HACER FALTA POR IMPLEMENTAR EL AÑADIR UNA RUTA. INTERFAZ
 }

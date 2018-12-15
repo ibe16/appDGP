@@ -26,6 +26,7 @@ public class ProveedorContenidos implements Serializable {
 
     private static volatile ArrayList<Ruta> rutas;
     private static volatile ArrayList<Valoracion> valoraciones;
+    private static volatile String nombreRutaValoracion;
     private static volatile ArrayList<Ruta> rutasFavoritas;
     private static volatile ProveedorContenidos instanciado;
 
@@ -83,9 +84,10 @@ public class ProveedorContenidos implements Serializable {
         });
     }
 
-    public void obtenerValoracionesDeRuta(final String nombreRuta, final RegistradorDatos escuchador){
+    public void obtenerValoracionesDeRuta(String nombreRuta, final RegistradorDatos escuchador){
         DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference valoracionesBd = baseDatos.child("valoraciones");
+        DatabaseReference valoracionesBd = baseDatos.child("valoraciones");
+        nombreRutaValoracion = nombreRuta;
 
         valoracionesBd.addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,7 +95,7 @@ public class ProveedorContenidos implements Serializable {
 
                 valoraciones = new ArrayList<>();
                 for (DataSnapshot unidad : dataSnapshot.getChildren()) {
-                    if(esLaRuta(unidad.getKey(), nombreRuta)){
+                    if(esLaRuta(unidad.getKey(), nombreRutaValoracion)){
                         extraeValoraciones(unidad);
                     }
                 }
@@ -160,5 +162,8 @@ public class ProveedorContenidos implements Serializable {
         valoracionesBd.setValue(subirValoraciones);
     }
 
+    public String getNombreRutaValoracion() {
+        return nombreRutaValoracion;
+    }
 }
 
