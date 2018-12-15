@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,25 @@ public class PerfilUsuario extends AppCompatActivity {
 
             }
         });
+        aniadirFlechaVolverAnteriorActividad();
+    }
 
+    private void aniadirFlechaVolverAnteriorActividad(){
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    /**
+     * Se sobrecarga onSupportNavigateUp() para habilitar a la flecha superior a volver
+     * a la actividad anterior
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

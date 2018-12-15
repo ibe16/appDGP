@@ -60,6 +60,7 @@
             android:theme="@style/AppTheme"
             android:label="@string/nav_preferencias_usuario">
         </activity>
+        <activity android:name=".actividades.ActividadValoracionesDetalladas" />
 
     </application>
 

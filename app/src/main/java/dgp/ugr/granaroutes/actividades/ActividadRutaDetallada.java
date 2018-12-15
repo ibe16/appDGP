@@ -40,6 +40,8 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     private Menu menu;
     private CardView valoracionPropia;
     private RecyclerView listaValoraciones;
+    private TextView cartelNoHayValoraciones;
+    private AdaptadorValoraciones adaptadorValoraciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
         ruta = findViewById(R.id.imagen_ruta);
         valoracionPropia = findViewById(R.id.contenedor_tu_valoracion);
         listaValoraciones = findViewById(R.id.rv_valoraciones);
+        cartelNoHayValoraciones = findViewById(R.id.cartel_no_hay_valoraciones);
 
 
         inicializarVariables();
@@ -200,6 +203,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
 
     public void mostrarDatos() {
         listaValoraciones.setVisibility(View.VISIBLE);
+        cartelNoHayValoraciones.setVisibility(View.INVISIBLE);
     }
 
 
@@ -207,7 +211,8 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     public void terminarInicializacion() {
         listaValoraciones.setHasFixedSize(true);
         listaValoraciones.setLayoutManager(new LinearLayoutManager(this));
-        AdaptadorValoraciones adaptadorValoraciones = new AdaptadorValoraciones(this, ProveedorContenidos.getInstance().getValoraciones(),
+        adaptadorValoraciones =
+                new AdaptadorValoraciones(this, ProveedorContenidos.getInstance().getValoraciones(),
                 this);
         listaValoraciones.setAdapter(adaptadorValoraciones);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
@@ -215,7 +220,14 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
 
         listaValoraciones.addItemDecoration(dividerItemDecoration);
 
-        mostrarDatos();
+        compruebaListaVacia();
+    }
+
+    private void compruebaListaVacia() {
+        if(listaValoraciones == null || adaptadorValoraciones.getItemCount() <= 0)
+            muestraNoHayDatos();
+        else
+            mostrarDatos();
     }
 
 
@@ -226,14 +238,19 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
 
     @Override
     public void onClick(Valoracion Valoracion) {
-        //TODO HACER
-        Toast.makeText(this,"IR A VALORACION DETALLADA",Toast.LENGTH_LONG).show();
+        irAValoracionesDetalladas();
+
+    }
+
+    private void irAValoracionesDetalladas() {
+        Intent intent = new Intent(this, ActividadValoracionesDetalladas.class);
+        startActivity(intent);
     }
 
     @Override
     public void muestraNoHayDatos() {
-        //TODO HACER
-        Toast.makeText(this,"CARTEL DE NO HAY DATOS",Toast.LENGTH_LONG).show();
+        listaValoraciones.setVisibility(View.INVISIBLE);
+        cartelNoHayValoraciones.setVisibility(View.VISIBLE);
     }
 
     //TODO HACER FALTA POR IMPLEMENTAR EL AÑADIR UNA RUTA. INTERFAZ

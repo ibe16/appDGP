@@ -35,6 +35,11 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
         clickHandler = handler;
     }
 
+    public AdaptadorValoraciones(Context context, ArrayList<Valoracion> valoracionesRemotas) {
+        this.context = context;
+        valoraciones = valoracionesRemotas;
+    }
+
     @NonNull
     @Override
     public AdaptadorValoraciones.ValoracionViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -71,7 +76,8 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
             usuario = itemView.findViewById(R.id.usuario_valoracion);
             descripcion = itemView.findViewById(R.id.descripcion_valoracion);
             puntuacion = itemView.findViewById(R.id.valoracion_numerica);
-            itemView.setOnClickListener(this);
+            if(clickHandler != null)
+                itemView.setOnClickListener(this);
         }
 
         @Override
