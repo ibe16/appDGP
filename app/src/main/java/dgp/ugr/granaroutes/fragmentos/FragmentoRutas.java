@@ -37,7 +37,7 @@ public class FragmentoRutas extends Fragment implements RegistradorDatos {
             ProveedorContenidos.getInstance().obtenerRutas(this);
         }
         else{
-            terminarInicializacion();
+            datosActualizados();
         }
 
         return view;
@@ -55,7 +55,7 @@ public class FragmentoRutas extends Fragment implements RegistradorDatos {
 
 
     @Override
-    public void terminarInicializacion() {
+    public void datosActualizados() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adaptadorRutas = new AdaptadorRutas(getContext(), ProveedorContenidos.getInstance().getRutas(), (ActividadPrincipal) getActivity());

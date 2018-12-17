@@ -13,6 +13,12 @@ public class Valoracion {
     public Valoracion() {
     }
 
+    public Valoracion(String descripcion, String usuario, String valoracion) {
+        this.descripcion = descripcion;
+        this.usuario = usuario;
+        this.valoracion = valoracion.replaceAll("\\.",",");
+    }
+
     public int getIdentificador() {
         return identificador;
     }
@@ -28,7 +34,7 @@ public class Valoracion {
     public String getValoracion() {
         return valoracion;
     }
-    public float getValoracionNumerica(){
+    public float cogerValoracionNumerica(){
         String cambiaComasPorPuntos = valoracion.replaceAll(",",".");
         return Float.parseFloat(cambiaComasPorPuntos);
     }

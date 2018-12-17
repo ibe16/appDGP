@@ -6,5 +6,5 @@ package dgp.ugr.granaroutes.data;
  * una vez termina la extracción de la rutas.
  */
 public interface RegistradorDatos {
-    void terminarInicializacion();
+    void datosActualizados();
 }

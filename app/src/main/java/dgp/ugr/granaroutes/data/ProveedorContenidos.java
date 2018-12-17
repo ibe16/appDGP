@@ -2,7 +2,6 @@ package dgp.ugr.granaroutes.data;
 
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -71,7 +70,7 @@ public class ProveedorContenidos implements Serializable {
                     rutas.add(rutita);
                 }
 
-                escuchador.terminarInicializacion();
+                escuchador.datosActualizados();
 
             }
 
@@ -99,7 +98,7 @@ public class ProveedorContenidos implements Serializable {
                         extraeValoraciones(unidad);
                     }
                 }
-                escuchador.terminarInicializacion();
+                escuchador.datosActualizados();
             }
 
             @Override
@@ -160,6 +159,9 @@ public class ProveedorContenidos implements Serializable {
             subirValoraciones.put(Integer.toString(valoracion.getIdentificador()),valoracion);
 
         valoracionesBd.setValue(subirValoraciones);
+    }
+    public void aniadirValoracion(Valoracion valoracion){
+        valoraciones.add(valoracion);
     }
 
     public String getNombreRutaValoracion() {

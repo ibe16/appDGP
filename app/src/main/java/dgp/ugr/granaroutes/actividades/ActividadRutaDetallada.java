@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -14,10 +15,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,8 +36,9 @@ import dgp.ugr.granaroutes.data.Valoracion;
 public class ActividadRutaDetallada extends AppCompatActivity implements RegistradorDatos,
         AdaptadorValoraciones.AdministradorClickValoraciones {
 
-
+    private int indiceValoracion;
     private int numero;
+    private int posicionY;
     private boolean esRutaFavorita;
     private TextView titulo;
     private TextView descripcion;
@@ -48,6 +51,8 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     private RecyclerView listaValoraciones;
     private TextView cartelNoHayValoraciones;
     private AdaptadorValoraciones adaptadorValoraciones;
+    private FloatingActionButton botonAniadirValoracion;
+    private ScrollView capaSuperior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,9 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
         listaValoraciones = findViewById(R.id.rv_valoraciones);
         cartelNoHayValoraciones = findViewById(R.id.cartel_no_hay_valoraciones);
         contenedorValoracion = findViewById(R.id.vista_tu_valoracion);
+        botonAniadirValoracion = findViewById(R.id.boton_valoracion);
+        capaSuperior = findViewById(R.id.capa_superior_ruta_detallada);
+
 
 
         inicializarVariables();
@@ -79,7 +87,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
                     (getIntent().getStringExtra("nombre"),this);
         }
         else{
-            terminarInicializacion();
+            datosActualizados();
         }
 
     }
@@ -137,6 +145,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     }
 
     private void inicializarVariables(){
+        posicionY = 0;
         Intent intent = getIntent();
         esRutaFavorita = intent.getBooleanExtra("favorito",false);
         numero = intent.getIntExtra("id",0);
@@ -155,6 +164,44 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
             lugaresTexto.append("\n");
         }
         lugares.setText(lugaresTexto.toString());
+
+
+        botonAniadirValoracion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irAEscribirValoracion();
+            }
+        });
+
+        aniadirSiHayScrollEsconderBoton();
+
+    }
+
+    private void irAEscribirValoracion() {
+        Intent intent = new Intent(getBaseContext(), ActividadRegistrarValoracion.class);
+        intent.putExtra("indice",indiceValoracion);
+        startActivity(intent);
+    }
+
+    private void aniadirSiHayScrollEsconderBoton() {
+        capaSuperior.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (capaSuperior.getScrollY() > posicionY && capaSuperior.getScrollY() > 0) {
+                    botonAniadirValoracion.hide();
+                }
+                /*} else if (capaSuperior.getScrollY() < posicionY || capaSuperior.getScrollY() <= 0) {
+                    botonAniadirValoracion.show();
+                }*/
+                else{
+                    botonAniadirValoracion.show();
+                }
+
+                posicionY = capaSuperior.getScrollY();
+            }
+
+
+        });
     }
 
     private void indicarCambiosActividadAnterior(){
@@ -215,7 +262,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
 
 
     @Override
-    public void terminarInicializacion() {
+    public void datosActualizados() {
         listaValoraciones.setHasFixedSize(true);
         listaValoraciones.setLayoutManager(new LinearLayoutManager(this));
         adaptadorValoraciones =
@@ -226,13 +273,16 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
                 listaValoraciones.getContext(), LinearLayoutManager.VERTICAL);
 
         listaValoraciones.addItemDecoration(dividerItemDecoration);
+        indiceValoracion = -1;
 
         compruebaListaVacia();
     }
 
     private void compruebaListaVacia() {
-        if(listaValoraciones == null || adaptadorValoraciones.getItemCount() <= 0)
+        if(listaValoraciones == null || adaptadorValoraciones.getItemCount() <= 0) {
             muestraNoHayDatos();
+            noMostrarValoracionUsuario();
+        }
         else {
             mostrarDatos();
             compruebaSiUsuarioHaVotado();
@@ -253,19 +303,28 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
                 emailUsuarioActual = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             if(valoracion.getUsuario().equals(emailUsuarioActual)){
                 continua = false;
-                muestraValoracionHecha(valoracion);
+                indiceValoracion = i;
+                muestraValoracionUsuario(valoracion);
             }
+        }
+
+        if(continua){
+            noMostrarValoracionUsuario();
         }
     }
 
-    private void muestraValoracionHecha(Valoracion valoracion) {
+    private void noMostrarValoracionUsuario() {
+        valoracionPropia.setVisibility(View.GONE);
+    }
+
+    private void muestraValoracionUsuario(Valoracion valoracion) {
         TextView usuario = contenedorValoracion.findViewById(R.id.usuario_valoracion);
         TextView descripcion = contenedorValoracion.findViewById(R.id.descripcion_valoracion);
         RatingBar ratingBar = contenedorValoracion.findViewById(R.id.valoracion_numerica);
 
         usuario.setText(valoracion.getUsuario());
         descripcion.setText(valoracion.getDescripcion());
-        ratingBar.setRating(valoracion.getValoracionNumerica());
+        ratingBar.setRating(valoracion.cogerValoracionNumerica());
 
         valoracionPropia.setVisibility(View.VISIBLE);
     }

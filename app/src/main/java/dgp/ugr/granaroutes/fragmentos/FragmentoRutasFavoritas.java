@@ -33,7 +33,7 @@ public class FragmentoRutasFavoritas extends FragmentoRutas{
             mostrarNoHayDatos();
         }
         else{
-            terminarInicializacion();
+            datosActualizados();
         }
 
         return view;
@@ -53,7 +53,7 @@ public class FragmentoRutasFavoritas extends FragmentoRutas{
     }
 
     @Override
-    public void terminarInicializacion() {
+    public void datosActualizados() {
 
         ArrayList<Ruta> rutasFavoritas = ProveedorContenidos.getInstance().getRutasFavoritas();
 

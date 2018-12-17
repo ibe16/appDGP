@@ -49,7 +49,7 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
         final Valoracion valoracion = valoraciones.get(position);
         ValoracionViewHolder.usuario.setText(valoracion.getUsuario());
         ValoracionViewHolder.descripcion.setText(valoracion.getDescripcion());
-        ValoracionViewHolder.puntuacion.setRating(valoracion.getValoracionNumerica());
+        ValoracionViewHolder.puntuacion.setRating(valoracion.cogerValoracionNumerica());
 
     }
 

@@ -43,7 +43,6 @@
     <string name="ruta_detallada_grupo_titulo">Grupos:</string>
 
 
-
     <string name="title_activity_drawer" translatable="false">DRAWER</string>
     <string name="nav_header_title" translatable="false">Android Studio</string>
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
@@ -52,4 +51,7 @@
     <string name="titulo_valoraciones">Valoraciones:</string>
     <string name="tu_valoracion_titulo">Tu valoración:</string>
     <string name="no_valoraciones">No hay valoraciones, ¡sé el primero en hacer una!</string>
+    <string name="pista_valoracion">Introduzca valoración numérica</string>
+    <string name="pista_valoracion_descripcion">Introduzca descripcion valoracion</string>
+    <string name="label_registrar_valoracion">Añadir Valoracion</string>
 </resources>
