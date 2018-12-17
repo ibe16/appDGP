@@ -37,34 +37,27 @@
 
         <TextView
             android:id="@+id/descripcion_valoracion"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/usuario_valoracion"
-            app:layout_constraintTop_toBottomOf="@+id/usuario_valoracion" />
+            app:layout_constraintStart_toStartOf="@+id/valoracion_numerica"
+            app:layout_constraintTop_toBottomOf="@+id/valoracion_numerica" />
 
         <RatingBar
             android:id="@+id/valoracion_numerica"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:isIndicator="true"
             android:numStars="5"
             android:rating="5"
             android:stepSize="0.1"
-            app:layout_constraintBottom_toTopOf="@+id/descripcion_valoracion"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.18"
-            app:layout_constraintStart_toEndOf="@+id/usuario_valoracion"
-            app:layout_constraintTop_toTopOf="@+id/usuario_valoracion"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="@+id/usuario_valoracion"
+            app:layout_constraintTop_toBottomOf="@+id/usuario_valoracion" />
 
     </android.support.constraint.ConstraintLayout>
 

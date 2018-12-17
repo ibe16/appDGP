@@ -28,6 +28,10 @@ public class Valoracion {
     public String getValoracion() {
         return valoracion;
     }
+    public float getValoracionNumerica(){
+        String cambiaComasPorPuntos = valoracion.replaceAll(",",".");
+        return Float.parseFloat(cambiaComasPorPuntos);
+    }
 
     @NonNull
     @Override

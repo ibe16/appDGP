@@ -15,10 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.adaptador.AdaptadorValoraciones;
@@ -39,6 +44,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     private ImageView ruta;
     private Menu menu;
     private CardView valoracionPropia;
+    private CardView contenedorValoracion;
     private RecyclerView listaValoraciones;
     private TextView cartelNoHayValoraciones;
     private AdaptadorValoraciones adaptadorValoraciones;
@@ -60,6 +66,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
         valoracionPropia = findViewById(R.id.contenedor_tu_valoracion);
         listaValoraciones = findViewById(R.id.rv_valoraciones);
         cartelNoHayValoraciones = findViewById(R.id.cartel_no_hay_valoraciones);
+        contenedorValoracion = findViewById(R.id.vista_tu_valoracion);
 
 
         inicializarVariables();
@@ -226,8 +233,41 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
     private void compruebaListaVacia() {
         if(listaValoraciones == null || adaptadorValoraciones.getItemCount() <= 0)
             muestraNoHayDatos();
-        else
+        else {
             mostrarDatos();
+            compruebaSiUsuarioHaVotado();
+        }
+    }
+
+    private void compruebaSiUsuarioHaVotado() {
+        ArrayList<Valoracion> tempValoraciones = ProveedorContenidos.getInstance().getValoraciones();
+        boolean continua = true;
+        for(int i = 0; i < tempValoraciones.size() && continua; i++){
+            Valoracion valoracion = tempValoraciones.get(i);
+
+            FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
+
+            String emailUsuarioActual = null;
+
+            if(usuarioActual != null)
+                emailUsuarioActual = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            if(valoracion.getUsuario().equals(emailUsuarioActual)){
+                continua = false;
+                muestraValoracionHecha(valoracion);
+            }
+        }
+    }
+
+    private void muestraValoracionHecha(Valoracion valoracion) {
+        TextView usuario = contenedorValoracion.findViewById(R.id.usuario_valoracion);
+        TextView descripcion = contenedorValoracion.findViewById(R.id.descripcion_valoracion);
+        RatingBar ratingBar = contenedorValoracion.findViewById(R.id.valoracion_numerica);
+
+        usuario.setText(valoracion.getUsuario());
+        descripcion.setText(valoracion.getDescripcion());
+        ratingBar.setRating(valoracion.getValoracionNumerica());
+
+        valoracionPropia.setVisibility(View.VISIBLE);
     }
 
 

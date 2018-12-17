@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.adaptador.AdaptadorValoraciones;
 import dgp.ugr.granaroutes.data.ProveedorContenidos;
-import dgp.ugr.granaroutes.data.Valoracion;
 
 public class ActividadValoracionesDetalladas extends AppCompatActivity {
 
@@ -27,7 +26,7 @@ public class ActividadValoracionesDetalladas extends AppCompatActivity {
         listaValoraciones.setHasFixedSize(true);
         listaValoraciones.setLayoutManager(new LinearLayoutManager(this));
         AdaptadorValoraciones adaptadorValoraciones =
-                new AdaptadorValoraciones(this, ProveedorContenidos.getInstance().getValoraciones());
+                new AdaptadorValoraciones(this, ProveedorContenidos.getInstance().getValoraciones(), null);
         listaValoraciones.setAdapter(adaptadorValoraciones);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 listaValoraciones.getContext(), LinearLayoutManager.VERTICAL);

@@ -197,7 +197,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:focusable="false"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contenedor_lugares">
@@ -207,17 +207,30 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/titulo_tu_valoracion"
+                    android:id="@+id/tu_valoracion_titulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/tu_valoracion_titulo"
                     android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/vista_tu_valoracion"
+                    layout="@layout/layout_valoracion_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tu_valoracion_titulo"
+                    app:layout_constraintTop_toBottomOf="@+id/tu_valoracion_titulo" />
 
 
             </android.support.constraint.ConstraintLayout>

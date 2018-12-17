@@ -2,6 +2,7 @@ package dgp.ugr.granaroutes.adaptador;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,15 +30,10 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
 
 
     public AdaptadorValoraciones(Context context, ArrayList<Valoracion> valoracionesRemotas,
-                                 AdministradorClickValoraciones handler) {
+                                 @Nullable AdministradorClickValoraciones handler) {
         this.context = context;
         valoraciones = valoracionesRemotas;
         clickHandler = handler;
-    }
-
-    public AdaptadorValoraciones(Context context, ArrayList<Valoracion> valoracionesRemotas) {
-        this.context = context;
-        valoraciones = valoracionesRemotas;
     }
 
     @NonNull
@@ -53,8 +49,7 @@ public class AdaptadorValoraciones extends RecyclerView.Adapter<AdaptadorValorac
         final Valoracion valoracion = valoraciones.get(position);
         ValoracionViewHolder.usuario.setText(valoracion.getUsuario());
         ValoracionViewHolder.descripcion.setText(valoracion.getDescripcion());
-        String cambiaComasPorPuntos = valoracion.getValoracion().replaceAll(",",".");
-        ValoracionViewHolder.puntuacion.setRating(Float.parseFloat(cambiaComasPorPuntos));
+        ValoracionViewHolder.puntuacion.setRating(valoracion.getValoracionNumerica());
 
     }
 
