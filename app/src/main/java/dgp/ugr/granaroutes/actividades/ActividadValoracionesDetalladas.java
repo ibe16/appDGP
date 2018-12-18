@@ -30,6 +30,7 @@ public class ActividadValoracionesDetalladas extends AppCompatActivity {
         listaValoraciones.setAdapter(adaptadorValoraciones);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 listaValoraciones.getContext(), LinearLayoutManager.VERTICAL);
+        
 
         listaValoraciones.addItemDecoration(dividerItemDecoration);
 
@@ -52,6 +53,6 @@ public class ActividadValoracionesDetalladas extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-    
+
 
 }
