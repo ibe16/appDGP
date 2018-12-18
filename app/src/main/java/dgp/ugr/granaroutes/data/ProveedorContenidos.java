@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import dgp.ugr.granaroutes.actividades.ActividadRegistrarValoracion;
+
 import static android.support.constraint.Constraints.TAG;
 
 
@@ -148,9 +150,9 @@ public class ProveedorContenidos implements Serializable {
 
     }
 
-    public void subirDatos(String nombreRuta){
+    public void subirDatos(){
         DatabaseReference baseDatos = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference valoracionesBd = baseDatos.child("valoraciones/" + nombreRuta);
+        final DatabaseReference valoracionesBd = baseDatos.child("valoraciones/" + nombreRutaValoracion);
 
         Map<String, Valoracion> subirValoraciones = new HashMap<>();
 
@@ -166,6 +168,10 @@ public class ProveedorContenidos implements Serializable {
 
     public String getNombreRutaValoracion() {
         return nombreRutaValoracion;
+    }
+
+    public void actualizaValoracionesDeRuta(RegistradorDatos actividadRegistrarValoracion) {
+        obtenerValoracionesDeRuta(nombreRutaValoracion,actividadRegistrarValoracion);
     }
 }
 

@@ -25,7 +25,6 @@ public class ActividadRegistrarValoracion extends AppCompatActivity implements R
     RatingBar puntuacionEstrellas;
     EditText puntuacionNumerica;
     FloatingActionButton mandarValoracion;
-    String nombreRuta;
     EditText descripcion;
     TextView usuarioTitulo;
 
@@ -38,7 +37,6 @@ public class ActividadRegistrarValoracion extends AppCompatActivity implements R
         aniadirFlechaVolverAnteriorActividad();
 
         usuarioTitulo = findViewById(R.id.contenedor_usuario_valoracion_registro);
-        nombreRuta = getIntent().getStringExtra("nombre_ruta");
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if(usuario != null)
             usuarioTitulo.setText(usuario.getEmail());
@@ -101,7 +99,7 @@ public class ActividadRegistrarValoracion extends AppCompatActivity implements R
     }
 
     private void actualizaValoraciones() {
-        ProveedorContenidos.getInstance().obtenerValoracionesDeRuta(nombreRuta,this);
+        ProveedorContenidos.getInstance().actualizaValoracionesDeRuta(this);
     }
 
     private void aniadirFlechaVolverAnteriorActividad() {
@@ -116,11 +114,11 @@ public class ActividadRegistrarValoracion extends AppCompatActivity implements R
     public void datosActualizados() {
         aniadirValoracion();
         subirDatos();
-        ProveedorContenidos.getInstance().subirDatos(nombreRuta);
+        ProveedorContenidos.getInstance().subirDatos();
     }
 
     private void subirDatos() {
-        ProveedorContenidos.getInstance().subirDatos(nombreRuta);
+        ProveedorContenidos.getInstance().subirDatos();
     }
 
     private void aniadirValoracion() {
