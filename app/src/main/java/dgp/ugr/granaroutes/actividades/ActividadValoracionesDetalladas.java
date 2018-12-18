@@ -52,5 +52,6 @@ public class ActividadValoracionesDetalladas extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+    
 
 }

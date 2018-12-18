@@ -352,5 +352,4 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
         cartelNoHayValoraciones.setVisibility(View.VISIBLE);
     }
 
-    //TODO HACER FALTA POR IMPLEMENTAR EL AÑADIR UNA RUTA. INTERFAZ
 }

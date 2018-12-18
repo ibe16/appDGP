@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import dgp.ugr.granaroutes.actividades.ActividadRegistrarValoracion;
-
 import static android.support.constraint.Constraints.TAG;
 
 
@@ -158,7 +156,7 @@ public class ProveedorContenidos implements Serializable {
 
 
         for(Valoracion valoracion:valoraciones)
-            subirValoraciones.put(Integer.toString(valoracion.getIdentificador()),valoracion);
+            subirValoraciones.put(Integer.toString(valoracion.cogerIdentificador()),valoracion);
 
         valoracionesBd.setValue(subirValoraciones);
     }
@@ -168,10 +166,6 @@ public class ProveedorContenidos implements Serializable {
 
     public String getNombreRutaValoracion() {
         return nombreRutaValoracion;
-    }
-
-    public void actualizaValoracionesDeRuta(RegistradorDatos actividadRegistrarValoracion) {
-        obtenerValoracionesDeRuta(nombreRutaValoracion,actividadRegistrarValoracion);
     }
 }
 

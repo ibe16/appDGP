@@ -3,6 +3,8 @@ package dgp.ugr.granaroutes.data;
 
 import android.support.annotation.NonNull;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Valoracion {
     private int identificador;
     private String descripcion;
@@ -16,10 +18,10 @@ public class Valoracion {
     public Valoracion(String descripcion, String usuario, String valoracion) {
         this.descripcion = descripcion;
         this.usuario = usuario;
-        this.valoracion = valoracion.replaceAll("\\.",",");
+        setValoracion(valoracion);
     }
 
-    public int getIdentificador() {
+    int cogerIdentificador() {
         return identificador;
     }
 
@@ -50,11 +52,19 @@ public class Valoracion {
                 '}';
     }
 
-    void setIdentificador(int i) {
+    public void setIdentificador(int i) {
         identificador = i;
     }
 
-    public void setUsuario(String cambiado) {
-        usuario = cambiado;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    private void setValoracion(String valoracion) {
+        this.valoracion = valoracion.replaceAll("\\.",",");
+    }
+
+    public void modificarValoracion(float valoracion) {
+        setValoracion(Float.toString(valoracion));
     }
 }
