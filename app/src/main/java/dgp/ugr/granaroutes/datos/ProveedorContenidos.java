@@ -1,4 +1,4 @@
-package dgp.ugr.granaroutes.data;
+package dgp.ugr.granaroutes.datos;
 
 
 import android.support.annotation.NonNull;
@@ -158,7 +158,8 @@ public class ProveedorContenidos implements Serializable {
         for(Valoracion valoracion:valoraciones)
             subirValoraciones.put(Integer.toString(valoracion.cogerIdentificador()),valoracion);
 
-        valoracionesBd.setValue(subirValoraciones);
+       valoracionesBd.setValue(subirValoraciones);
+
     }
     public void aniadirValoracion(Valoracion valoracion){
         valoraciones.add(valoracion);

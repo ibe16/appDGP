@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 import dgp.ugr.granaroutes.adaptador.AdaptadorRutas;
-import dgp.ugr.granaroutes.data.ProveedorContenidos;
-import dgp.ugr.granaroutes.data.Ruta;
+import dgp.ugr.granaroutes.datos.ProveedorContenidos;
+import dgp.ugr.granaroutes.datos.Ruta;
 
 public class FragmentoRutasFavoritas extends FragmentoRutas{
 

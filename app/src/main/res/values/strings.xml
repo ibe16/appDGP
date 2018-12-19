@@ -40,7 +40,16 @@
     <string name="mostrar_ruta_mapa">Mostrar ruta en el mapa</string>
     <string name="descripcion_cartel_no_rutas">No hay rutas, asegurese de haber hecho favorita una</string>
     <string name="ruta_detallada_lugares_titulo">Lugares:</string>
-    <string name="ruta_detallada_grupo_titulo">Grupos:</string>
+    <string name="ruta_detallada_grupo_titulo">Accesibilidad:</string>
+    <string name="titulo_valoraciones">Valoraciones:</string>
+    <string name="tu_valoracion_titulo">Tu valoración:</string>
+    <string name="no_valoraciones">No hay valoraciones, ¡sé el primero en hacer una!</string>
+    <string name="pista_valoracion">Introduzca valoración numérica</string>
+    <string name="pista_valoracion_descripcion">Introduzca descripcion valoracion</string>
+    <string name="label_registrar_valoracion">Añadir Valoracion</string>
+    <string name="app_name_login">Iniciar Sesión</string>
+    <string name="boton_registar_valoracion">Valorar Ruta</string>
+    <string name="mandar_valoracion">Registrar Valoracion</string>
 
 
     <string name="title_activity_drawer" translatable="false">DRAWER</string>
@@ -48,10 +57,7 @@
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="app_name" translatable="false">GranaRoutes</string>
     <string name="hastag_code" translatable="false">#GranaRoutesApp</string>
-    <string name="titulo_valoraciones">Valoraciones:</string>
-    <string name="tu_valoracion_titulo">Tu valoración:</string>
-    <string name="no_valoraciones">No hay valoraciones, ¡sé el primero en hacer una!</string>
-    <string name="pista_valoracion">Introduzca valoración numérica</string>
-    <string name="pista_valoracion_descripcion">Introduzca descripcion valoracion</string>
-    <string name="label_registrar_valoracion">Añadir Valoracion</string>
+    <string name="maximo_num_estrellas">/5</string>
+    <string name="valoracion_estrellas">valoracion expresada en estrellas</string>
+
 </resources>

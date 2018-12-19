@@ -24,7 +24,9 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".actividades.ActividadPrincipal"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name">
+
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -44,7 +46,7 @@
         <activity
             android:name=".actividades.ActividadLogIn"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 

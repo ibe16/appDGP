@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.adaptador.AdaptadorValoraciones;
-import dgp.ugr.granaroutes.data.ProveedorContenidos;
+import dgp.ugr.granaroutes.datos.ProveedorContenidos;
 
 public class ActividadValoracionesDetalladas extends AppCompatActivity {
 

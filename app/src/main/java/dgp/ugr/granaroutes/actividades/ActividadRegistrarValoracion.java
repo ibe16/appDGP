@@ -15,8 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.data.ProveedorContenidos;
-import dgp.ugr.granaroutes.data.Valoracion;
+import dgp.ugr.granaroutes.datos.ProveedorContenidos;
+import dgp.ugr.granaroutes.datos.Valoracion;
 
 public class ActividadRegistrarValoracion extends AppCompatActivity {
 

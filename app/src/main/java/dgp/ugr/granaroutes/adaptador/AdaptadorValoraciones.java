@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.data.Valoracion;
+import dgp.ugr.granaroutes.datos.Valoracion;
 
 
 

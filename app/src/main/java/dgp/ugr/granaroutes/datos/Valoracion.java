@@ -1,9 +1,7 @@
-package dgp.ugr.granaroutes.data;
+package dgp.ugr.granaroutes.datos;
 
 
 import android.support.annotation.NonNull;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Valoracion {
     private int identificador;

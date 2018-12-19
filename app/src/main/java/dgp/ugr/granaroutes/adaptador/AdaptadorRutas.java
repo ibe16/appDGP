@@ -13,8 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
-import dgp.ugr.granaroutes.data.ProveedorContenidos;
-import dgp.ugr.granaroutes.data.Ruta;
+import dgp.ugr.granaroutes.datos.ProveedorContenidos;
+import dgp.ugr.granaroutes.datos.Ruta;
 
 
 /**
@@ -28,7 +28,6 @@ public class AdaptadorRutas extends RecyclerView.Adapter<AdaptadorRutas.RutaView
 
     public interface AdapterOnClickHandler{
         void onClick(Ruta ruta);
-
         void reorganizarDatos();
         void muestraNoHayDatos();
     }

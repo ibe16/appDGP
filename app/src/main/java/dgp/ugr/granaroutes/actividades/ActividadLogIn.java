@@ -38,6 +38,8 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_actividad_log_in);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.app_name_login);
 
         loginEmail =  findViewById(R.id.email_login);
         loginContrasenia = findViewById(R.id.contraseña_login);

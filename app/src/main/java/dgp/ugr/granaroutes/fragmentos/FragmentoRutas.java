@@ -15,8 +15,8 @@ import android.widget.ProgressBar;
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.actividades.ActividadPrincipal;
 import dgp.ugr.granaroutes.adaptador.AdaptadorRutas;
-import dgp.ugr.granaroutes.data.ProveedorContenidos;
-import dgp.ugr.granaroutes.data.RegistradorDatos;
+import dgp.ugr.granaroutes.datos.ProveedorContenidos;
+import dgp.ugr.granaroutes.datos.RegistradorDatos;
 
 public class FragmentoRutas extends Fragment implements RegistradorDatos {
 

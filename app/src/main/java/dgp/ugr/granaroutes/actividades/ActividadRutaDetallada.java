@@ -29,9 +29,9 @@ import java.util.ArrayList;
 
 import dgp.ugr.granaroutes.R;
 import dgp.ugr.granaroutes.adaptador.AdaptadorValoraciones;
-import dgp.ugr.granaroutes.data.ProveedorContenidos;
-import dgp.ugr.granaroutes.data.RegistradorDatos;
-import dgp.ugr.granaroutes.data.Valoracion;
+import dgp.ugr.granaroutes.datos.ProveedorContenidos;
+import dgp.ugr.granaroutes.datos.RegistradorDatos;
+import dgp.ugr.granaroutes.datos.Valoracion;
 
 public class ActividadRutaDetallada extends AppCompatActivity implements RegistradorDatos,
         AdaptadorValoraciones.AdministradorClickValoraciones {
