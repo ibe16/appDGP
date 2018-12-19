@@ -4,7 +4,7 @@
     <string name="icono_estrella_descripcion">Marcar como favorito</string>
     <string name="boton_mostrar_en_mapa">Mostrar ruta en mapa</string>
     <string name="rutas_descripcion">Listado de Rutas</string>
-    <string name="rutas_descripcion_favoritos">Marcar Favorito</string>
+    <string name="rutas_descripcion_favoritos">Rutas Favoritas</string>
     <string name="rutas_descripcion_mapa">Ir al Mapa</string>
     <string name="mapa_descricion">Mapa</string>
     <string name="imagen_ruta_descripcion">Imagen sobre la ruta</string>
@@ -60,5 +60,7 @@
     <string name="maximo_num_estrellas">/5</string>
     <string name="valoracion_estrellas">valoracion expresada en estrellas</string>
     <string name="puntacion_numerica_valoracion">Valoración númerica</string>
+    <string name="favorito">Marcar como favorito</string>
+    <string name="palabra_favorito">Favorito</string>
 
 </resources>

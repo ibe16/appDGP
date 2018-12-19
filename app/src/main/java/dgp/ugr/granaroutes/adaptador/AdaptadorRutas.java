@@ -81,10 +81,12 @@ public class AdaptadorRutas extends RecyclerView.Adapter<AdaptadorRutas.RutaView
         if(rutas.get(posicion).isFavorito()){
             rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_black));
             rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_selected));
+            rutaViewHolder.textoFavorito.setTextColor(ContextCompat.getColor(context, R.color.icon_tint_selected));
         }
         else{
             rutaViewHolder.estrella.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icono_estrella));
             rutaViewHolder.estrella.setColorFilter(ContextCompat.getColor(context, R.color.icon_tint_normal));
+            rutaViewHolder.textoFavorito.setTextColor(ContextCompat.getColor(context, R.color.icon_tint_normal));
         }
     }
 
@@ -98,6 +100,7 @@ public class AdaptadorRutas extends RecyclerView.Adapter<AdaptadorRutas.RutaView
         TextView titulo;
         TextView descripcion;
         ImageButton estrella;
+        TextView textoFavorito;
 
 
         RutaViewHolder(@NonNull View itemView) {
@@ -106,6 +109,7 @@ public class AdaptadorRutas extends RecyclerView.Adapter<AdaptadorRutas.RutaView
             titulo = itemView.findViewById(R.id.descripcion_elemento);
             descripcion = itemView.findViewById(R.id.subdescripcion_elemento);
             estrella = itemView.findViewById(R.id.icono_estrella);
+            textoFavorito = itemView.findViewById(R.id.texto_favorito_lista_rutas);
             itemView.setOnClickListener(this);
         }
 

@@ -6,9 +6,9 @@
 
     <item
         android:id="@+id/detallado_favorito"
-        android:icon="@drawable/estrella_detallada_no_fav"
-        android:contentDescription="@string/rutas_descripcion_favoritos"
-        android:title="@string/rutas_descripcion_favoritos"
+        android:icon="@drawable/icono_estrella"
+        android:contentDescription="@string/favorito"
+        android:title="@string/favorito"
         app:showAsAction="ifRoom"/>
 
     <item
