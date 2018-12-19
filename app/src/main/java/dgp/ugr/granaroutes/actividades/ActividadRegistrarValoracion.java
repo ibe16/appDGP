@@ -130,7 +130,7 @@ public class ActividadRegistrarValoracion extends AppCompatActivity {
     private void inicializaUsuario() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if(usuario != null)
-            usuarioTitulo.setText(usuario.getEmail());
+            usuarioTitulo.setText(usuario.getDisplayName());
     }
 
     private void volverAnteriorActividad() {

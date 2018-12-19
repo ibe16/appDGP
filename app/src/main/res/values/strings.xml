@@ -62,5 +62,6 @@
     <string name="puntacion_numerica_valoracion">Valoración númerica</string>
     <string name="favorito">Marcar como favorito</string>
     <string name="palabra_favorito">Favorito</string>
+    <string name="prompt_name">Nombre Usuario</string>
 
 </resources>

@@ -300,7 +300,7 @@ public class ActividadRutaDetallada extends AppCompatActivity implements Registr
             String emailUsuarioActual = null;
 
             if(usuarioActual != null)
-                emailUsuarioActual = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                emailUsuarioActual = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
             if(valoracion.getUsuario().equals(emailUsuarioActual)){
                 continua = false;
                 indiceValoracion = i;

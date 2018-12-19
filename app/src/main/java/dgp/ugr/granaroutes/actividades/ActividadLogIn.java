@@ -20,13 +20,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.auth.api.Auth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import dgp.ugr.granaroutes.R;
 
 public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    EditText loginEmail, loginContrasenia;
+    EditText loginEmail, loginContrasenia, nombreUsuario;
     Button loginButtonEmail;
     Button loginButtonGoogle;
     Button registroButtonEmail;
@@ -46,6 +48,7 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
         loginButtonEmail = findViewById(R.id.boton_iniciar_sesion_email);
         registroButtonEmail = findViewById(R.id.boton_registro_email);
         loginButtonGoogle = findViewById(R.id.boton_iniciar_sesion_gmail);
+        nombreUsuario = findViewById(R.id.nombre_usuario);
 
         inicializaServiciosGoogle();
 
@@ -75,7 +78,6 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
         }
 
 
-
     }
 
     private void registrarCorreo(){
@@ -85,6 +87,7 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),"Registrado con "+ loginEmail.toString(),Toast.LENGTH_SHORT).show();
+                            asignarNombreAUsuario();
                             irActividadPrincipal();
 
                         } else {
@@ -94,6 +97,15 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
                     }
                 });
 
+    }
+
+    private void asignarNombreAUsuario() {
+        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+        if(usuario != null && !nombreUsuario.getText().toString().isEmpty()) {
+            UserProfileChangeRequest actualizaciones = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(nombreUsuario.getText().toString()).build();
+            usuario.updateProfile(actualizaciones);
+        }
     }
 
     private void signInCorreo(){
@@ -177,5 +189,7 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
     private boolean estaAutenticado(){
         return firebaseAuth.getCurrentUser()!=null;
     }
+
+
 }
 
