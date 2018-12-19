@@ -83,6 +83,7 @@
                         android:layout_marginTop="8dp"
                         android:inputType="numberDecimal"
                         android:labelFor="@+id/contenedor_editar_puntuacion_valoracion_registro"
+                        android:contentDescription="@string/puntacion_numerica_valoracion"
                         app:layout_constraintStart_toStartOf="@+id/contenedor_barra_valoracion_registro"
                         app:layout_constraintTop_toBottomOf="@+id/contenedor_barra_valoracion_registro"
                         tools:ignore="Autofill" />

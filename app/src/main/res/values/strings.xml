@@ -59,5 +59,6 @@
     <string name="hastag_code" translatable="false">#GranaRoutesApp</string>
     <string name="maximo_num_estrellas">/5</string>
     <string name="valoracion_estrellas">valoracion expresada en estrellas</string>
+    <string name="puntacion_numerica_valoracion">Valoración númerica</string>
 
 </resources>
