@@ -25,6 +25,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.util.ArrayList;
+
 import dgp.ugr.granaroutes.R;
 
 public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -62,7 +64,13 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
         registroButtonEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrarCorreo();
+                ArrayList<String> valoresIncorrectos = esFormularioCorrecto();
+                if(valoresIncorrectos.size() == 0)
+                    registrarCorreo();
+                else {
+                    muestraErrores(valoresIncorrectos);
+                }
+
             }
         });
 
@@ -80,18 +88,50 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
 
     }
 
+    private void muestraErrores(ArrayList<String> valoresIncorrectos) {
+        StringBuilder builder = new StringBuilder();
+        for(String cadena:valoresIncorrectos){
+            builder.append(cadena);
+        }
+        Toast.makeText(getBaseContext(), builder.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    private ArrayList<String> esFormularioCorrecto() {
+        ArrayList<String> fallos = new ArrayList<>();
+
+        if(!loginEmail.getText().toString().contains("@") ||
+                !loginEmail.getText().toString().contains(".")){
+            fallos.add(getString(R.string.fallo_correo));
+        }
+        if(!(loginContrasenia.getText().toString().length() >= 6)){
+            fallos.add(getString(R.string.fallo_contraseña));
+        }
+        if(!(nombreUsuario.getText().toString().length() > 0)){
+            fallos.add(getString(R.string.fallo_usuario));
+        }
+
+        return fallos;
+    }
+
     private void registrarCorreo(){
+
         firebaseAuth.createUserWithEmailAndPassword(loginEmail.getText().toString(), loginContrasenia.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),"Registrado con "+ loginEmail.toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),getString(R.string.autentificado)+" " +
+                                            nombreUsuario.getText().toString(),
+                                    Toast.LENGTH_SHORT).show();
                             asignarNombreAUsuario();
                             irActividadPrincipal();
 
+
+
                         } else {
-                            Toast.makeText(getApplicationContext(),"Error de registro",Toast.LENGTH_SHORT).show();
+                            if( task.getException() !=null)
+                                Toast.makeText(getApplicationContext(),task.getException().toString(),
+                                        Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -114,11 +154,14 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),"Iniciado sesión con "+ loginEmail.toString(),Toast.LENGTH_SHORT).show();
-                    irActividadPrincipal();
+                    if(firebaseAuth.getCurrentUser() != null) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.autentificado) +
+                               " " + firebaseAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                        irActividadPrincipal();
+                    }
 
                 } else {
-                    Toast.makeText(getApplicationContext(),"Error de inicio de sesión",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.error_autentificacion,Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -140,7 +183,7 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
                     authWithGoogle(account);
             }
             else{
-                Toast.makeText(getApplicationContext(),"Error de autentificación",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),R.string.error_autentificacion,Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -151,18 +194,21 @@ public class ActividadLogIn extends AppCompatActivity implements GoogleApiClient
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Autenticado con "+ account.getDisplayName(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.autentificado)+ " " +
+                            account.getDisplayName(),Toast.LENGTH_SHORT).show();
                     irActividadPrincipal();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"Error de autentificación",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.error_autentificacion,Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void irActividadPrincipal(){
-        startActivity(new Intent(getApplicationContext(),ActividadPrincipal.class));
+        Intent intent = new Intent(getApplicationContext(),ActividadPrincipal.class);
+        intent.putExtra("nombreUsuario", nombreUsuario.getText().toString());
+        startActivity(intent);
         finish();
     }
 

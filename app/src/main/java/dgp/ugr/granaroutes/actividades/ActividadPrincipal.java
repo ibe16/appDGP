@@ -250,7 +250,10 @@ public class ActividadPrincipal extends AppCompatActivity
 
         if(usuario != null) {
             titulo.setText(usuario.getEmail());
-            descripcion.setText(usuario.getDisplayName());
+            if(usuario.getDisplayName()!= null && usuario.getDisplayName().length() > 0)
+                descripcion.setText(usuario.getDisplayName());
+            else if(getIntent().hasExtra("nombreUsuario"))
+                descripcion.setText(getIntent().getStringExtra("nombreUsuario"));
         }
     }
 

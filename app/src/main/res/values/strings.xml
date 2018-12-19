@@ -50,6 +50,17 @@
     <string name="app_name_login">Iniciar Sesión</string>
     <string name="boton_registar_valoracion">Valorar Ruta</string>
     <string name="mandar_valoracion">Registrar Valoracion</string>
+    <string name="valoracion_estrellas">valoracion expresada en estrellas</string>
+    <string name="puntacion_numerica_valoracion">Valoración númerica</string>
+    <string name="favorito">Marcar como favorito</string>
+    <string name="palabra_favorito">Favorito</string>
+    <string name="prompt_name">Nombre Usuario</string>
+    <string name="fallo_correo">Email incorrecto\n</string>
+    <string name="fallo_contraseña">Contraseña incorrecta, debe tener al menos 6 caracteres\n</string>
+    <string name="fallo_usuario">Nombre incorrecto, ponga un nombre\n</string>
+    <string name="autentificado">Autenticado con </string>
+    <string name="error_registro">Error de registro</string>
+    <string name="error_autentificacion">Error de autentificación</string>
 
 
     <string name="title_activity_drawer" translatable="false">DRAWER</string>
@@ -57,11 +68,7 @@
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="app_name" translatable="false">GranaRoutes</string>
     <string name="hastag_code" translatable="false">#GranaRoutesApp</string>
-    <string name="maximo_num_estrellas">/5</string>
-    <string name="valoracion_estrellas">valoracion expresada en estrellas</string>
-    <string name="puntacion_numerica_valoracion">Valoración númerica</string>
-    <string name="favorito">Marcar como favorito</string>
-    <string name="palabra_favorito">Favorito</string>
-    <string name="prompt_name">Nombre Usuario</string>
+    <string name="maximo_num_estrellas" translatable="false">/5</string>
+
 
 </resources>
