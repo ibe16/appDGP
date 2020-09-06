@@ -15,19 +15,19 @@ navegador donde poder ver y realizar rutas por lugares de interés en
 Granada.
 
 * ## Antecedentes del equipo de trabajo: experiencia/conocimientos del equipo de trabajo
-  * Guillermo Bueno Vargas: Experiencia desarrollando aplicaciones en
+  * **Guillermo Bueno Vargas**: Experiencia desarrollando aplicaciones en
 Android , en Programación Orientada a Objetos, C++, Java y en el editor de
 gráficos vectoriales Inkscape.
-  * Antonio Morales:Programación Orientada a Objetos, Programación y
+  * **Antonio Morales**:Programación Orientada a Objetos, Programación y
 Diseño Web. Coordinación con grupos de trabajo amplios.
-  * Irene Béjar Maldonado: Programación Orientada a Objetos, C++, Java,
+  * **Irene Béjar Maldonado**: Programación Orientada a Objetos, C++, Java,
 desarrollo de servicios web, administración bases de datos SQL.
-  * Ángel Polo Martínez: Programación Orientada a Objetos (C++, Java,
+  * **Ángel Polo Martínez**: Programación Orientada a Objetos (C++, Java,
 Python), Programación y Diseño Web, diseño y administración de bases de
 datos.
-  * Julio Rodríguez Luengo: Programación Orientada a Objetos, diseño y
+  * **Julio Rodríguez Luengo**: Programación Orientada a Objetos, diseño y
 programación web, y
-  * Jacob Folch: Programación orientada a objetos, programación funcional,
+  * **Jacob Folc**h: Programación orientada a objetos, programación funcional,
 backend, programación web.
 
 * ## Justificación:
